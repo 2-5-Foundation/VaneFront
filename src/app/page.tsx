@@ -22,10 +22,10 @@ export default function Home() {
          <h1 className="font-semibold text-lg w-4/6"><PermIdentityIcon/><Link href="/profile">GM User</Link>  <span className="font-semibold mx-9 italic">What do you want to Experience today?</span></h1>
          {/* tl;dr Activity, Analytics, Plan */}
          <div className="flex justify-around align-middle bg-transparent h-24 p-5 w-full">
-            <div>Configuration<h1 className="font-semibold underline underline-offset-8">Wallet</h1></div>
-            <div >Ads Analytics<h1 className="font-semibold underline underline-offset-8">100 impressions</h1></div>
-            <div>Subscription Plan<h1 className="font-semibold underline underline-offset-8">Bronze</h1></div>
-            <div>Clients Community Members(DAO)<h1 className="font-semibold underline underline-offset-8">5</h1></div>
+            <div className="flex items-center flex-col">Configuration<h1 className="font-semibold underline underline-offset-8">Wallet</h1></div>
+            <div className="flex items-center flex-col">Ads Analytics<h1 className="font-semibold underline underline-offset-8">100 impressions</h1></div>
+            <div className="flex items-center flex-col">Subscription Plan<h1 className="font-semibold underline underline-offset-8">Bronze</h1></div>
+            <div className="flex items-center flex-col">Clients Community Members(DAO)<h1 className="font-semibold underline underline-offset-8">5</h1></div>
          </div>
       </div>
 
