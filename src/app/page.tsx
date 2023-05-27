@@ -13,6 +13,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 export default function Home() {
   return (
@@ -126,7 +127,12 @@ export default function Home() {
       <div className="w-1/2 h-20 max-h-50 align-middle flex  justify-around p-4 flex-row bg-slate-50">
         <div>
           <AccountBalanceWalletIcon/>
-        <Button size="small"><Link href="/wallet">Configure Wallet</Link></Button>
+          <Button size="small"><Link href="/wallet">Configure Wallet</Link></Button>
+        </div>
+
+        <div>
+          <ExitToAppIcon/>
+          <Button size="small"><Link href="/sign-in">Sign-In (Use App)</Link></Button>
         </div>
 
         <div>
