@@ -14,13 +14,26 @@ import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+//---------------------------------------------------------------------------
+import { useChainApiContext, useWalletContext } from '../Context/store';
+import { useEffect } from 'react';
+
+
+
 
 export default function Home() {
+  const {account}  = useWalletContext();
+  const {api,fetchChainApi} = useChainApiContext()
+  
+  useEffect(()=>{
+    fetchChainApi()  
+  },[api])
+
   return (
     <main className="flex min-h-screen w-full flex-col items-center justify-between p-2">
       {/*Welcoming Witty text */}
       <div className="w-4/6  h-25 max-h-50 p-5 items-center  text-white  bg-gray-800 flex flex-col justify-around">
-         <h1 className="font-semibold text-lg w-4/6"><PermIdentityIcon/><Link href="/profile">GM User</Link>  <span className="font-semibold mx-9 italic">What do you want to Experience today?</span></h1>
+         <h1 className="font-semibold text-lg w-4/6"><PermIdentityIcon/><Link href="/profile">GM {account? account.meta.name : 'User'}</Link>  <span className="font-light mx-9 text-xl">What do you want to Experience today?</span></h1>
          {/* tl;dr Activity, Analytics, Plan */}
          <div className="flex justify-around align-middle bg-transparent h-24 p-5 w-full">
             <div className="flex items-center flex-col">Configuration<h1 className="font-semibold underline underline-offset-8">Wallet</h1></div>
@@ -33,7 +46,7 @@ export default function Home() {
       {/* Products*/ }
       <div className="w-3/5 h-130 max-h-150 p-5 flex flex-wrap justify-evenly flex-row bg-white">
         <div className="m-5">
-          <Card sx={{ minWidth: 275 }}>
+          <Card variant="outlined" sx={{ minWidth: 275 }}>
             <CardContent>
               <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
                   Secure & Risk-Free Payment
@@ -51,7 +64,7 @@ export default function Home() {
         </div>
 
         <div className="m-5">
-        <Card sx={{ minWidth: 275 }}>
+        <Card variant="outlined" sx={{ minWidth: 275 }}>
             <CardContent>
               <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
                   Run On-Chain Ads
@@ -69,7 +82,7 @@ export default function Home() {
         </div>
  
         <div className="m-5">
-        <Card sx={{ minWidth: 275 }}>
+        <Card variant="outlined" sx={{ minWidth: 275 }}>
             <CardContent>
               <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
                 Build Your Client Community.
@@ -87,7 +100,7 @@ export default function Home() {
         </div>
 
         <div className="m-5">
-        <Card sx={{ minWidth: 275 }}>
+        <Card variant="outlined" sx={{ minWidth: 275 }}>
             <CardContent>
               <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
                   Store & Grow your Capital
@@ -105,7 +118,7 @@ export default function Home() {
         </div>
 
         <div className="m-5">
-        <Card sx={{ minWidth: 275 }}>
+        <Card variant="outlined" sx={{ minWidth: 275 }}>
             <CardContent>
               <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
                   Use WhatsApp Interface

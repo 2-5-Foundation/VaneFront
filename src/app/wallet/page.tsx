@@ -5,23 +5,23 @@ import React from 'react'
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
 import type { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
-import { enablePolkadotExtension, getSigner } from '../Component/wallet/pjs';
 import { Signer } from "@polkadot/types/types";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { blue } from '@mui/material/colors';
+import { useWalletContext } from '../../Context/store';
+import { enablePolkadotExtension ,getSigner} from '@/Component/wallet/pjs';
 
 
 function Page() {
 
   const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>();
   const [isWallet, setIsWallet] = useState<boolean>();
-  const [signer, setSigner] = useState<Signer>();
   const [selectedAcc, setSelectedAcc] = useState<InjectedAccountWithMeta>();
 
-
+  const {account,setAccount,signer,setSigner} = useWalletContext();
 
   const getAccounts = async() =>{
     // Check if the Wallet is installed
@@ -37,15 +37,18 @@ function Page() {
     
   }
 
-  const handleChange = (event: SelectChangeEvent) => {
-    //@ts-ignore
-    setSelectedAcc(event.target.value);
-  };
-
-  const getSigner = async(account:InjectedAccountWithMeta) =>{
+  const getTheSigner = async(account:InjectedAccountWithMeta) =>{
       // get the signer & update the context state of the signer and Account name
       const signer = await getSigner(account);
+      setSigner(signer)
   }
+
+  const handleChange = (event: SelectChangeEvent) => {
+    //@ts-ignore
+    setAccount(event.target.value);
+    //@ts-ignore
+    getTheSigner(event.target.value)
+  };
 
   useEffect(()=>{
     getAccounts()
