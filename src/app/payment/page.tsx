@@ -76,12 +76,12 @@ function Page() {
   };
 
   return (
-    <div  className="flex min-h-screen w-full flex-col items-center justify-around p-2">
+    <div  className="flex min-h-screen w-full flex-col items-center justify-center  p-2">
         <div className="w-1/2 h-20 max-h-50 align-middle flex  justify-around p-4 flex-row bg-slate-50">
           <h2>Feel safe and experience risk free crypto payment</h2>
         </div>
 
-        <div>
+        <div className="mt-8">
 
         <Box sx={{ width:800 }}>
           <Stepper activeStep={activeStep} orientation="vertical">
