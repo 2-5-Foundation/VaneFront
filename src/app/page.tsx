@@ -42,6 +42,30 @@ export default function Home() {
             <div className="flex items-center flex-col">Clients Community Members(DAO)<h1 className="font-semibold underline underline-offset-8">5</h1></div>
          </div>
       </div>
+      
+       {/* Setting up profile & Wallet*/}
+       <div className="w-1/2 h-20 max-h-50 align-middle flex  justify-around p-4 flex-row bg-slate-50">
+        <div>
+          <AccountBalanceWalletIcon/>
+          <Button size="small"><Link href="/wallet">Configure Wallet</Link></Button>
+        </div>
+
+        <div>
+          <ExitToAppIcon/>
+          <Button size="small"><Link href="/sign-in">Sign-In (Use App)</Link></Button>
+        </div>
+
+        <div>
+          <CurrencyBitcoinIcon/>
+        <Button size="small"><Link href="/plan">Choose Plan</Link></Button>
+        </div>
+
+        <div>
+          <SettingsApplicationsIcon/>
+        <Button size="small"><Link href="/setting">Settings</Link></Button>
+        </div>
+
+      </div>
 
       {/* Products*/ }
       <div className="w-3/5 h-130 max-h-150 p-5 flex flex-wrap justify-evenly flex-row bg-white">
@@ -134,29 +158,10 @@ export default function Home() {
             </CardActions>
           </Card>
         </div>
+
       </div>
       
-      {/* Setting up profile & Wallet*/}
-      <div className="w-1/2 h-20 max-h-50 align-middle flex  justify-around p-4 flex-row bg-slate-50">
-        <div>
-          <AccountBalanceWalletIcon/>
-          <Button size="small"><Link href="/wallet">Configure Wallet</Link></Button>
-        </div>
-
-        <div>
-          <ExitToAppIcon/>
-          <Button size="small"><Link href="/sign-in">Sign-In (Use App)</Link></Button>
-        </div>
-
-        <div>
-          <SettingsApplicationsIcon/>
-        <Button size="small"><Link href="/setting">Settings</Link></Button>
-        </div>
-
-        <div>
-          <CurrencyBitcoinIcon/>
-        <Button size="small"><Link href="/plan">Choose Plan</Link></Button>
-        </div>
+      <div className="w-5/6 h-30 max-h-50 p-5 items-center  text-white  bg-transparent flex flex-col justify-around">
       </div>
     </main>
   )
