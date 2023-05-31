@@ -24,13 +24,21 @@ const orderTracker = async() =>{
 } 
 
 //5. payeeTxn Ticket for keeping track pending Multi-Txn and referenc No;
-const payeeTxnTicket = async() =>{
-
+export const payeeTxnTicket = async(api?:ApiPromise, account?:string) =>{
+    const data =await api?.query.payment.payeeTxnTicket(account);
+    console.log(data?.toHuman())
 }
 
 //6. payerTxn Ticket for keeping track pending Multi-Txn and referenc No;
-const payerTxnTicket = async() =>{
-
+export const payerTxnTicket = async(api?:ApiPromise,account?:string) =>{
+    if(api && account){
+        console.log("Query payer ticket")
+        const data =await api.query.payment.payerTxnTicket(account);
+        console.log(data?.toHuman())
+    }else{
+        console.log("Missing some Params in payer ticket query ")
+    }
+    
 }
 
 //7. Resolver signer as one of the mechanism for handling disputes

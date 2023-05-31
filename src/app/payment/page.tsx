@@ -33,6 +33,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { vanePay } from '@/Component/VaneChainApi/PaymentApi/Tx';
 // CONTEXT
 import { useChainApiContext, useWalletContext,useTxnTicketContext } from '@/Context/store';
+import { payerTxnTicket } from '@/Component/VaneChainApi/PaymentApi/Query';
 
 //------------------------------------------------
 
@@ -119,8 +120,10 @@ function Page() {
         vanePayWalletParams.resolver        
       );
       
-       handleNext()
-      
+  };
+
+  if(finalized){
+    payerTxnTicket(api,account)
   }
 
   return (
