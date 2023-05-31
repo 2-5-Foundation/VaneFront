@@ -27,7 +27,7 @@ export default function Home() {
   
   useEffect(()=>{
     fetchChainApi()  
-  },[api])
+  },[])
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center justify-between p-2">
@@ -47,7 +47,7 @@ export default function Home() {
        <div className="w-1/2 h-20 max-h-50 align-middle flex  justify-around p-4 flex-row bg-slate-50">
         <div>
           <AccountBalanceWalletIcon/>
-          <Button size="small"><Link href="/wallet">Configure Wallet</Link></Button>
+          <Button size="small"><Link href="/wallet">Configure Wallet (Use App)</Link></Button>
         </div>
 
         <div>

@@ -1,6 +1,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import { WalletContextProvider,ChainApiContextProvider } from '../Context/store'
+import { WalletContextProvider,ChainApiContextProvider,useTxnTicketContext, TxnTicketContextProvider } from '../Context/store'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,7 +19,9 @@ export default function RootLayout({
       <body className={inter.className}>
       <WalletContextProvider>
         <ChainApiContextProvider>
-          {children}
+          <TxnTicketContextProvider>
+            {children}
+          </TxnTicketContextProvider>
         </ChainApiContextProvider>
       </WalletContextProvider>        
       </body>

@@ -70,3 +70,40 @@ export const ChainApiContextProvider = ({children}:Props) =>{
 };
 
 export const useChainApiContext = () => useContext(ChainApiContext);
+
+// Payee Confirming Status ( TXN TICKET)
+interface TicketDetails {
+    payee?:string,
+    accountMulti?:string,
+    reference?:string
+}
+
+interface TxnTicket {
+    ticketDetails?: TicketDetails;
+    finalized: boolean;
+    setTicketDetails: Dispatch<TicketDetails>;
+    setFinalized: Dispatch<boolean>;
+}
+
+const defaultStateTicket:TxnTicket = {
+    ticketDetails: undefined,
+    finalized:false,
+    setTicketDetails: (account?:TicketDetails) =>{return },
+    setFinalized: (finalized:boolean) =>{return}
+}
+
+const TxnTicketContext = createContext<TxnTicket>(defaultStateTicket);
+
+
+export const TxnTicketContextProvider = ({children}:Props) =>{
+    const [ticketDetails, setTicketDetails] = useState<TicketDetails>();
+    const [finalized, setFinalized] = useState<boolean>(false);
+
+    return (
+        <TxnTicketContext.Provider value={{setTicketDetails,setFinalized,finalized, ticketDetails:{payee:ticketDetails?.payee, accountMulti:ticketDetails?.accountMulti, reference:ticketDetails?.reference}}}>
+            {children}
+        </TxnTicketContext.Provider>
+    )
+};
+
+export const useTxnTicketContext = () => useContext(TxnTicketContext);

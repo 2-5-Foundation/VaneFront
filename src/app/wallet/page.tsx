@@ -91,7 +91,7 @@ function Page() {
         <div className="p-10">
           {
             isWallet? (<Button size="small"><Link href="/">Return Home</Link></Button>) 
-            : (<h1 className="font-sans font-light text-lg">Wallet unavailable? Try out our Wallet-less Sign-In</h1>)
+            : (<h1 className="font-sans font-light text-lg">Wallet unavailable? Try out our <h1 className="bold"><Link href="/sign-in">Wallet-less Sign-In</Link></h1></h1>)
           }
         </div>
 

@@ -1,5 +1,6 @@
 'use client'
 
+
 import React,{useEffect,useState} from 'react'
 import Link from 'next/link';
 // Material UI
@@ -28,28 +29,22 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+// ---------TX & QUERIES--------------------------
+import { vanePay } from '@/Component/VaneChainApi/PaymentApi/Tx';
+// CONTEXT
+import { useChainApiContext, useWalletContext,useTxnTicketContext } from '@/Context/store';
+
 //------------------------------------------------
 
 function Page() {
+  // CONTEXT
+  const {account, signer}  = useWalletContext();
+  const {api} = useChainApiContext();
+  const {setTicketDetails,ticketDetails,finalized,setFinalized} = useTxnTicketContext();
+  //---------------------------------------------
 
-
-  const [activeStep, setActiveStep] = useState(0);
-  // TXN
-  const [allDone, setAllDone] = useState<boolean>()
-  const [confirm, setConfirm] = useState<Confirm>();
-  const [resolver, setResolver] =  useState<Resolver>()
-  
-  // Vane Confirm
-  const TxnTicket = {
-    payee: String,
-    reference: String,
-    SharedAccount: String
-  }
-
-  const [payeeStatus, setPayeeStatus] = useState<typeof TxnTicket>();
-
-  // Confirm Enum
-  enum Confirm {
+   // Confirm Enum
+   enum Confirm {
     Payee = "Payee",
     Payer = "Payer"
   };
@@ -62,6 +57,47 @@ function Page() {
     Governance = "Governance"
   }
 
+   // Vane Confirm
+   type TxnTicket = {
+    payee: string,
+    reference: string,
+    SharedAccount: string
+  }
+
+  // Vane Pay Txn params for wallet users
+  type VanePayParams = {
+    payee:string,
+    amount: number,
+    resolver: Resolver |null;
+  }
+  // Defaul Value
+  const payWalletParams:VanePayParams ={
+    payee:"",
+    amount: 0,
+    resolver: null
+  }
+  //---------------------------------------------------//
+
+  // Wallet or Wallet-Less
+  const [isWallet, setIsWallet] = useState<boolean>();
+
+  const [activeStep, setActiveStep] = useState(0);
+  // TXN
+  const [allDone, setAllDone] = useState<boolean>()
+  const [confirm, setConfirm] = useState<Confirm>();
+  const [resolver, setResolver] =  useState<Resolver>()
+  const [payeeStatus, setPayeeStatus] = useState<TxnTicket>();
+  // VanePayWallet
+  const [vanePayWalletParams, setVanePayWalletParams] = useState<VanePayParams>(payWalletParams);
+  
+  const handleWalletParams = (param:VanePayParams) =>{
+      setVanePayWalletParams({...vanePayWalletParams,...param})
+
+  }
+
+  console.log(vanePayWalletParams)
+  
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -69,11 +105,23 @@ function Page() {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-  
-  const handleConfirm = (event: SelectChangeEvent) => {
-    //@ts-ignore
-    setConfirm(event.target.value);
-  };
+
+
+  // Call TXN VANE PAY
+  const handleVanePay = async() =>{
+      await vanePay(
+        setFinalized,
+        api,
+        signer,
+        account?.address,
+        vanePayWalletParams.payee,
+        vanePayWalletParams.amount,
+        vanePayWalletParams.resolver        
+      );
+      
+       handleNext()
+      
+  }
 
   return (
     <div  className="flex min-h-screen w-full flex-col items-center justify-center  p-2">
@@ -83,7 +131,7 @@ function Page() {
 
         <div className="mt-8">
 
-        <Box sx={{ width:800 }}>
+        <Box sx={{ width:700 }}>
           <Stepper activeStep={activeStep} orientation="vertical">
             
               <Step key="1">
@@ -107,28 +155,30 @@ function Page() {
                         <div>
                           <TextField
                             required
-                            id="PayeeAddress"
-                            label="Payee Address"
-                            
+                            id="Payee-Address"
+                            label="Payee-Address"
+                            //@ts-ignore
+                            onChange={(e) => handleWalletParams({payee:e.target.value})}
                           />
                           <TextField
                             id="Amount"
-                            label="Amount in USD"
-                            
+                            label="Amount"
+                            //@ts-ignore
+                            onChange={(e) => handleWalletParams({amount:e.target.value})}
                           />
-                          <FormControl  disabled sx={{ m: 1, minWidth: 120, width:50 }} size="small">
-                            <InputLabel id="demo-select-small-label">Confirm as</InputLabel>
+                          {/* <FormControl sx={{ m: 1, minWidth: 120, width:50 }} size="small">
+                            <InputLabel id="resolver">Resolver Choice</InputLabel>
                               <Select
-                                labelId="demo-select-small-label"
-                                id="demo-select-small"
+                                labelId="resolver-choice"
+                                id="resolver"
                                 defaultValue="null"
                                 value={resolver}
-                                label="Age"
-                                onChange={handleConfirm}
+                                label="resolver"
+                                onChange={handleResolver}
                               >
                                 <MenuItem value={Resolver.null}>No Resolver</MenuItem>
                               </Select>
-                          </FormControl>
+                          </FormControl> */}
                         </div>
                       </Box>
                     </CardContent>
@@ -138,7 +188,7 @@ function Page() {
                     <div>
                       <Button
                         variant="outlined"
-                        onClick={handleNext}
+                        onClick={handleVanePay}
                         sx={{ mt: 1, mr: 1 }}
                       >
                         Send
