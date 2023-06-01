@@ -76,9 +76,9 @@ export default function Home() {
                   Secure & Risk-Free Payment
               </Typography>
               <Typography variant="body2">
-                  well meaning and kindly.
                   <br />
-                  {'"a benevolent smile"'}
+                  Be free from wrong crypto address mistakes <br></br>
+                  .Feel safe while sending funds
               </Typography>
             </CardContent>
             <CardActions>
@@ -94,9 +94,9 @@ export default function Home() {
                   Run On-Chain Ads
               </Typography>
               <Typography variant="body2">
-                  well meaning and kindly.
-                  <br />
-                  {'"a benevolent smile"'}
+                  Gain visibility from Dexs, Chain explorers and <br></br>
+                  protocals using unique Vane Metadata transfer protocol
+                  
               </Typography>
             </CardContent>
             <CardActions>
@@ -112,9 +112,8 @@ export default function Home() {
                 Build Your Client Community.
               </Typography>
               <Typography variant="body2">
-                  well meaning and kindly.
-                  <br />
-                  {'"a benevolent smile"'}
+                  Benefit verifiable testimonials and <br></br>
+                  actual client retention and inputs
               </Typography>
             </CardContent>
             <CardActions>
@@ -130,9 +129,7 @@ export default function Home() {
                   Store & Grow your Capital
               </Typography>
               <Typography variant="body2">
-                  well meaning and kindly.
-                  <br />
-                  {'"a benevolent smile"'}
+                  Access staking and Dexs features <br></br> to grow your capital
               </Typography>
             </CardContent>
             <CardActions>
@@ -148,9 +145,7 @@ export default function Home() {
                   Use WhatsApp Interface
               </Typography>
               <Typography variant="body2">
-                  well meaning and kindly.
-                  <br />
-                  {'"a benevolent smile"'}
+                  Send funds to friend and family <br></br> using WhatsApp interface
               </Typography>
             </CardContent>
             <CardActions>
