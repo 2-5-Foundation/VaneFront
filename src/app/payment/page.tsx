@@ -123,7 +123,7 @@ function Page() {
   };
 
   if(finalized){
-    payerTxnTicket(api,account)
+    payerTxnTicket(api,account?.address)
   }
 
   return (
