@@ -72,13 +72,13 @@ export const ChainApiContextProvider = ({children}:Props) =>{
 export const useChainApiContext = () => useContext(ChainApiContext);
 
 // Payee Confirming Status ( TXN TICKET)
-interface TicketDetails {
+export interface TicketDetails {
     payee?:string,
-    accountMulti?:string,
+    accountMulti?:string, //Currently is only payer, payee and reference and no multiID.
     reference?:string
 }
 
-interface TxnTicket {
+export interface TxnTicket {
     ticketDetails?: TicketDetails;
     finalized: boolean;
     setTicketDetails: Dispatch<TicketDetails>;

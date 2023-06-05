@@ -1,5 +1,6 @@
 import { ApiPromise } from "@polkadot/api";
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
+import { TicketDetails } from "@/Context/store";
 
 // All Pallet Payment Storage Queries
 
@@ -30,11 +31,17 @@ export const payeeTxnTicket = async(api?:ApiPromise, account?:string) =>{
 }
 
 //6. payerTxn Ticket for keeping track pending Multi-Txn and referenc No;
-export const payerTxnTicket = async(api?:ApiPromise,account?:string) =>{
+export const payerTxnTicket = async(
+    ticketDetails:(details:TicketDetails)=>void,
+    api?:ApiPromise,
+    account?:string
+
+    ) =>{
     if(api && account){
         console.log("Query payer ticket")
         const data =await api.query.payment.payerTxnTicket(account);
         console.log(data?.toHuman())
+
     }else{
         console.log("Missing some Params in payer ticket query ")
     }

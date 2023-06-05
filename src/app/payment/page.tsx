@@ -119,12 +119,17 @@ function Page() {
         vanePayWalletParams.amount,
         vanePayWalletParams.resolver        
       );
+      handleNext()
       
   };
-
+  // Fetch the reference number from storage
   if(finalized){
-    payerTxnTicket(api,account?.address)
+    payerTxnTicket(setTicketDetails,api,account?.address);
+    
   }
+  // subscribe to confirmed accounts storage to check if Payee has already confirmed.
+  // The payee needs to confirm first
+
 
   return (
     <div  className="flex min-h-screen w-full flex-col items-center justify-center  p-2">

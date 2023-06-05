@@ -44,7 +44,7 @@ export default function Home() {
       </div>
       
        {/* Setting up profile & Wallet*/}
-       <div className="w-1/2 h-20 max-h-50 align-middle flex  justify-around p-4 flex-row bg-slate-50">
+       <div className="w-5/6 h-20 max-h-50 align-middle flex  justify-around p-4 flex-row bg-slate-50">
         <div>
           <AccountBalanceWalletIcon/>
           <Button size="small"><Link href="/wallet">Configure Wallet (Use App)</Link></Button>
@@ -77,8 +77,9 @@ export default function Home() {
               </Typography>
               <Typography variant="body2">
                   <br />
-                  Be free from wrong crypto address mistakes <br></br>
-                  .Feel safe while sending funds
+                  Be free from incorrect crypto address mistakes <br></br>
+                  Feel safe while sending funds <br/> 
+                  Control your transfered funds along the way
               </Typography>
             </CardContent>
             <CardActions>
@@ -94,8 +95,8 @@ export default function Home() {
                   Run On-Chain Ads
               </Typography>
               <Typography variant="body2">
-                  Gain visibility from Dexs, Chain explorers and <br></br>
-                  protocals using unique Vane Metadata transfer protocol
+                  Gain visibility from Dexs, Chain explorers <br/> and
+                  protocals using unique <br/> Vane Metadata transfer protocol
                   
               </Typography>
             </CardContent>
