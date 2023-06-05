@@ -23,7 +23,7 @@ import TextField from '@mui/material/TextField';
 // Alert Feedback
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 // Form
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -32,16 +32,18 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 // ---------TX & QUERIES--------------------------
 import { vanePay } from '@/Component/VaneChainApi/PaymentApi/Tx';
 // CONTEXT
-import { useChainApiContext, useWalletContext,useTxnTicketContext } from '@/Context/store';
+import { useChainApiContext, useWalletContext,useTxnTicketContext, TicketDetails } from '@/Context/store';
 import { payerTxnTicket } from '@/Component/VaneChainApi/PaymentApi/Query';
-
+import { ApiPromise } from '@polkadot/api';
+// txn
+import { confirmPayer } from '@/Component/VaneChainApi/PaymentApi/Tx';
 //------------------------------------------------
 
 function Page() {
   // CONTEXT
   const {account, signer}  = useWalletContext();
   const {api} = useChainApiContext();
-  const {setTicketDetails,ticketDetails,finalized,setFinalized} = useTxnTicketContext();
+  const {setTicketDetails,ticketDetails,finalized,setFinalized, payeeConfirmed, setPayeeConfirmed} = useTxnTicketContext();
   //---------------------------------------------
 
    // Confirm Enum
@@ -80,14 +82,14 @@ function Page() {
   //---------------------------------------------------//
 
   // Wallet or Wallet-Less
-  const [isWallet, setIsWallet] = useState<boolean>();
+  const [isWallet, setIsWallet] = useState<boolean>(false);
 
   const [activeStep, setActiveStep] = useState(0);
   // TXN
-  const [allDone, setAllDone] = useState<boolean>()
+  const [allDone, setAllDone] = useState<boolean>(false)
   const [confirm, setConfirm] = useState<Confirm>();
   const [resolver, setResolver] =  useState<Resolver>()
-  const [payeeStatus, setPayeeStatus] = useState<TxnTicket>();
+  const [payerStatus, setPayerStatus] = useState<boolean>(false);
   // VanePayWallet
   const [vanePayWalletParams, setVanePayWalletParams] = useState<VanePayParams>(payWalletParams);
   
@@ -107,6 +109,27 @@ function Page() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const confirmationSubscriber = async() =>{
+    
+    let ticket = ticketDetails;
+    if(api && ticket){
+      console.log("reference No: "+ ticket.reference)
+      const unsubscribe = await api.query.payment.confirmedSigners(ticket.reference,(confirmation:string[])=>{
+        console.log("waiting for Payee confirmation")    
+        if(confirmation.length != 0){
+                console.log("Payee already confirmed")
+                console.log(confirmation)
+                setPayeeConfirmed(true)
+            }
+        //@ts-ignore    
+        unsubscribe();
+        }).catch(err => console.log(err));
+        
+
+    }
+  
+      
+  };
 
   // Call TXN VANE PAY
   const handleVanePay = async() =>{
@@ -122,13 +145,42 @@ function Page() {
       handleNext()
       
   };
+
+  // handle Payer Confirmation
+  const confirmPayerPay =async()=>{
+      await confirmPayer(
+          setActiveStep,
+          setAllDone,
+          api,
+          signer,
+          account?.address,
+          ticketDetails?.reference
+      )
+  }
+  
   // Fetch the reference number from storage
   if(finalized){
-    payerTxnTicket(setTicketDetails,api,account?.address);
+    payerTxnTicket(
+      setTicketDetails,
+      api,
+      account?.address, // payer as current account injected
+      vanePayWalletParams.payee
+    )
+    confirmationSubscriber();
+  };
+
+  // The above function updates ticketDetails and the below functions consumes it  
+  // if(ticketDetails?.reference){
+
+  //   // subscribe to confirmed accounts storage to check if Payee has already confirmed.
+  //   // The payee needs to confirm first
     
-  }
-  // subscribe to confirmed accounts storage to check if Payee has already confirmed.
-  // The payee needs to confirm first
+  //   // update the confirmation on the UI
+
+  // }
+
+
+  
 
 
   return (
@@ -139,7 +191,7 @@ function Page() {
 
         <div className="mt-8">
 
-        <Box sx={{ width:700 }}>
+        <Box sx={{ width:600 }}>
           <Stepper activeStep={activeStep} orientation="vertical">
             
               <Step key="1">
@@ -150,7 +202,7 @@ function Page() {
                 </StepLabel>
                 <StepContent>
 
-                  <Card variant="outlined" sx={{display:"flex",flex:"column", width:600 }}>
+                  <Card variant="outlined" sx={{display:"flex",flex:"column", width:500 }}>
                     <CardContent>
                       <Typography sx={{ fontSize: 10 }} color="text.secondary" gutterBottom>
                           Send To
@@ -220,16 +272,27 @@ function Page() {
                   <span>Verify & Confirm</span>
                 </StepLabel>
                 <StepContent>
-                  <Card variant="outlined">
+                  <Card variant="outlined" sx={{display:"flex",flex:"column", width:600 }}>
                     <CardContent>
                       <Typography sx={{ fontSize: 15 }} color="text.secondary" gutterBottom>
                           Verify the payee address and Confirm 
                       </Typography>
-                      {payeeStatus ? 
+                      {payeeConfirmed ? 
                         (
-                          <Typography sx={{ fontSize: 15 }} color="text.primary" gutterBottom>
-                            
-                          </Typography>
+                          <Box sx={{ display: 'flex', flexDirection:'column',padding:1, marginRight:1}}>
+                              
+                              <Typography sx={{ fontSize: 15 }} color="text.secondary" gutterBottom>
+                                  Payee Confirmation Status: <CheckCircleOutlineIcon/> 
+                              </Typography>
+                              <Typography sx={{ fontSize: 13 }} color="text.secondary" gutterBottom>
+                                  Payee Address: {ticketDetails?.payee} 
+                              </Typography>
+                              <Typography sx={{ fontSize: 15 }} color="text.secondary" gutterBottom>
+                                  Txn Reference No: {ticketDetails?.reference}
+                              </Typography>
+
+                          </Box>
+                          
                         ) : 
                         (
                           <Box sx={{ display: 'flex', flex:'column',padding:2, marginRight:10}}>
@@ -251,8 +314,8 @@ function Page() {
                     <div>
                       <Button
                         variant="outlined"
-                        disabled={payeeStatus === undefined}
-                        onClick={handleNext}
+                        disabled={payeeConfirmed === undefined}
+                        onClick={confirmPayerPay}
                         sx={{ mt: 1, mr: 1 }}
                       >
                         Confirm

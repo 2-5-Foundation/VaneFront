@@ -81,15 +81,19 @@ export interface TicketDetails {
 export interface TxnTicket {
     ticketDetails?: TicketDetails;
     finalized: boolean;
+    payeeConfirmed: boolean;
     setTicketDetails: Dispatch<TicketDetails>;
     setFinalized: Dispatch<boolean>;
+    setPayeeConfirmed: Dispatch<boolean>
 }
 
 const defaultStateTicket:TxnTicket = {
     ticketDetails: undefined,
     finalized:false,
+    payeeConfirmed: false,
     setTicketDetails: (account?:TicketDetails) =>{return },
-    setFinalized: (finalized:boolean) =>{return}
+    setFinalized: (finalized:boolean) =>{return},
+    setPayeeConfirmed: (confirmed:boolean) =>{return}
 }
 
 const TxnTicketContext = createContext<TxnTicket>(defaultStateTicket);
@@ -98,9 +102,10 @@ const TxnTicketContext = createContext<TxnTicket>(defaultStateTicket);
 export const TxnTicketContextProvider = ({children}:Props) =>{
     const [ticketDetails, setTicketDetails] = useState<TicketDetails>();
     const [finalized, setFinalized] = useState<boolean>(false);
+    const [payeeConfirmed, setPayeeConfirmed] = useState<boolean>(false)
 
     return (
-        <TxnTicketContext.Provider value={{setTicketDetails,setFinalized,finalized, ticketDetails:{payee:ticketDetails?.payee, accountMulti:ticketDetails?.accountMulti, reference:ticketDetails?.reference}}}>
+        <TxnTicketContext.Provider value={{setTicketDetails,setFinalized,setPayeeConfirmed,payeeConfirmed,finalized, ticketDetails:{payee:ticketDetails?.payee, accountMulti:ticketDetails?.accountMulti, reference:ticketDetails?.reference}}}>
             {children}
         </TxnTicketContext.Provider>
     )

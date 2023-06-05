@@ -34,13 +34,22 @@ export const payeeTxnTicket = async(api?:ApiPromise, account?:string) =>{
 export const payerTxnTicket = async(
     ticketDetails:(details:TicketDetails)=>void,
     api?:ApiPromise,
-    account?:string
+    payer?:string,
+    payee?:string
 
     ) =>{
-    if(api && account){
+    if(api && payer && payee){
         console.log("Query payer ticket")
-        const data =await api.query.payment.payerTxnTicket(account);
-        console.log(data?.toHuman())
+        const data =await api.query.payment.payerTxnTicket(payer, payee);
+        //@ts-ignore
+        console.log("Ticket "+ data?.toHuman()[0])
+        const details:TicketDetails = {
+             //@ts-ignore
+             payee: data?.toHuman()[0].payee,
+             //@ts-ignore
+             reference: data?.toHuman()[0].referenceNo
+        };
+        ticketDetails(details);
 
     }else{
         console.log("Missing some Params in payer ticket query ")

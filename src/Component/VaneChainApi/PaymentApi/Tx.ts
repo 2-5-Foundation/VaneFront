@@ -1,6 +1,7 @@
 import { ApiPromise } from "@polkadot/api";
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 import { Signer } from "@polkadot/types/types";
+import { Dispatch, SetStateAction } from "react";
 //import "vane-types/api-augment"
 // All Pallet Payment Transactions
 
@@ -15,7 +16,7 @@ export const vanePay = async(
             const vanePayCall = api.tx.payment.vanePay(payee,amount,resolver);
             console.log('Submitting Vane Pay')
             // Sign and Send
-            vanePayCall.signAndSend(account,{signer},({status, events}) =>{
+            await vanePayCall.signAndSend(account,{signer},({status, events}) =>{
                 if(status?.isFinalized){
                     console.log("Vane pay Finalized");
                     setFinalized(true)
@@ -38,10 +39,35 @@ const vaneOrderPay = async() =>{
 
 }
 
-//3. ConfirmPay
-export const confirmPay = async() =>{
+//3. ConfirmPayer
+export const confirmPayer = async(
+    setActiveStep:Dispatch<SetStateAction<number>>,
+    setAllDone: Dispatch<boolean>,
+    api?:ApiPromise,
+    signer?: Signer,
+    payer?:string,
+    reference?:string
+) =>{
+
+    if(api && signer && payer && reference){
+
+        const confirmPayCall = api.tx.payment.confirmPay("Payer",reference);
+
+        await confirmPayCall.signAndSend(payer,{signer},({events,status})=>{
+            if(status.isFinalized){
+                console.log("Payer confirmed");
+                setActiveStep((prevStep) => prevStep +1)
+                setAllDone(true)
+            }
+        })
+
+    }else{
+        console.log("Some confirm payer params missing")
+    }
 
 }
+
+//4. confirmPayee
 
 //4. RevertFunds
 const revertFunds = async() =>{
