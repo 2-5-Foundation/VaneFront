@@ -71,3 +71,28 @@ const revertedTxnsPayee = async()=>{
 const revertedTxnsPayer = async()=>{
     
 }
+
+//10. Get Payee TXN Tickets
+export const getPayeeTickets = async(
+    payeeTickets:(tickets:TicketDetails[])=>void,
+    api?:ApiPromise,
+    payee?:string
+
+) =>{
+
+    if(api && payee){
+        const tickets = await api.query.payment.payeeTxnTicket(payee);       
+        console.log(tickets.toHuman())
+        let alltickets:TicketDetails[] =[];
+        //@ts-ignore
+        tickets?.toHuman().map(ticket =>{
+            const data:TicketDetails = {
+                payer:ticket.payer,
+                reference: ticket.referenceNo
+            };
+            alltickets.push(data);
+        })
+        payeeTickets(alltickets)
+        
+    }
+}

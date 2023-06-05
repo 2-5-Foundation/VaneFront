@@ -125,10 +125,8 @@ function Page() {
         unsubscribe();
         }).catch(err => console.log(err));
         
-
     }
   
-      
   };
 
   // Call TXN VANE PAY
@@ -185,8 +183,9 @@ function Page() {
 
   return (
     <div  className="flex min-h-screen w-full flex-col items-center justify-center  p-2">
-        <div className="w-1/2 h-20 max-h-50 align-middle flex  justify-around p-4 flex-row bg-slate-50">
-          <h2>Feel safe and experience risk free crypto payment</h2>
+        <div className="w-1/2 h-20 max-h-50 align-middle flex justify-center p-4 flex-col bg-slate-50">
+          <h2 className="maxWidth font-light flex justify-center">Feel safe and experience risk free crypto payment</h2>
+          <Button sx={{fontSize:12}}><Link href="/payment/pending">Pending Payment Requests</Link></Button>
         </div>
 
         <div className="mt-8">

@@ -1,3 +1,4 @@
+import { TicketDetails } from "@/Context/store";
 import { ApiPromise } from "@polkadot/api";
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 import { Signer } from "@polkadot/types/types";
@@ -51,7 +52,7 @@ export const confirmPayer = async(
 
     if(api && signer && payer && reference){
 
-        const confirmPayCall = api.tx.payment.confirmPay("Payer",reference);
+        const confirmPayCall = api.tx.payment.confirmPay('Payer',reference);
 
         await confirmPayCall.signAndSend(payer,{signer},({events,status})=>{
             if(status.isFinalized){
@@ -68,6 +69,38 @@ export const confirmPayer = async(
 }
 
 //4. confirmPayee
+export const confirmPayee = async(
+    setpayeeTickets:Dispatch<SetStateAction<TicketDetails[]>>,
+    payeeTickets:TicketDetails[],
+    api?:ApiPromise,
+    signer?: Signer,
+    payee?:string,
+    reference?:string
+) =>{
+
+    if(api && signer && payee && reference){
+
+        const confirmPayCall = api.tx.payment.confirmPay("Payee",reference);
+
+        await confirmPayCall.signAndSend(payee,{signer},({events,status})=>{
+            if(status.isFinalized){
+                console.log("Payee confirmed");
+                payeeTickets.map(ticket =>{
+                    if(ticket.reference === reference){
+                        ticket.payeeConfirmed = true;
+                        // update the state
+                    }
+                })
+            }
+        })
+
+    }else{
+        console.log("Some confirm payer params missing")
+    }
+
+}
+
+
 
 //4. RevertFunds
 const revertFunds = async() =>{

@@ -67,13 +67,13 @@ function Page() {
               isWallet? 
               (
                 <FormControl sx={{ m: 1, minWidth: 120,width:300,borderColor:'lightblue' }} size="medium">
-                <InputLabel id="demo-select-small-label">Choose Wallet Account</InputLabel>
+                <InputLabel id="wallet">Choose Wallet Account</InputLabel>
                 <Select
-                  labelId="demo-select-small-label"
-                  id="demo-select-small"
+                  labelId="Choose-Wallet"
+                  id="wallet"
                   //@ts-ignore
                   value={selectedAcc}
-                  label="Age"
+                  label="account"
                   onChange={handleChange}
                 >
                   {accounts?.map((acc,id) =>(
@@ -91,7 +91,7 @@ function Page() {
         <div className="p-10">
           {
             isWallet? (<Button size="small"><Link href="/">Return Home</Link></Button>) 
-            : (<h1 className="font-sans font-light text-lg">Wallet unavailable? Try out our <h1 className="bold"><Link href="/sign-in">Wallet-less Sign-In</Link></h1></h1>)
+            : (<h1 className="font-sans font-light text-base">Wallet unavailable? Try out our <Button><Link href="/sign-in">Wallet-less Sign-In</Link></Button></h1>)
           }
         </div>
 

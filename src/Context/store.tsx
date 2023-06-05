@@ -74,17 +74,21 @@ export const useChainApiContext = () => useContext(ChainApiContext);
 // Payee Confirming Status ( TXN TICKET)
 export interface TicketDetails {
     payee?:string,
-    accountMulti?:string, //Currently is only payer, payee and reference and no multiID.
-    reference?:string
+    payer?:string, //Currently is only payer, payee and reference and no multiID.
+    accountMultiId?:string,
+    reference?:string,
+    payeeConfirmed?:boolean
 }
+
 
 export interface TxnTicket {
     ticketDetails?: TicketDetails;
     finalized: boolean;
-    payeeConfirmed: boolean;
+    payeeConfirmed:boolean,
     setTicketDetails: Dispatch<TicketDetails>;
     setFinalized: Dispatch<boolean>;
-    setPayeeConfirmed: Dispatch<boolean>
+    setPayeeConfirmed: Dispatch<boolean>;
+    setPayee1Confirmed:Dispatch<boolean>
 }
 
 const defaultStateTicket:TxnTicket = {
@@ -93,7 +97,8 @@ const defaultStateTicket:TxnTicket = {
     payeeConfirmed: false,
     setTicketDetails: (account?:TicketDetails) =>{return },
     setFinalized: (finalized:boolean) =>{return},
-    setPayeeConfirmed: (confirmed:boolean) =>{return}
+    setPayeeConfirmed: (confirmed:boolean) =>{return},
+    setPayee1Confirmed: (confirmed:boolean) => {return}
 }
 
 const TxnTicketContext = createContext<TxnTicket>(defaultStateTicket);
@@ -102,10 +107,23 @@ const TxnTicketContext = createContext<TxnTicket>(defaultStateTicket);
 export const TxnTicketContextProvider = ({children}:Props) =>{
     const [ticketDetails, setTicketDetails] = useState<TicketDetails>();
     const [finalized, setFinalized] = useState<boolean>(false);
-    const [payeeConfirmed, setPayeeConfirmed] = useState<boolean>(false)
-
+    const [payeeConfirmed, setPayeeConfirmed] = useState<boolean>(false) // This is a value for payee confirmation in the payment page
+    const [payee1Confirmed, setPayee1Confirmed] = useState<boolean>(false) // This is a  value for payee confirmation in the payment/pending page
     return (
-        <TxnTicketContext.Provider value={{setTicketDetails,setFinalized,setPayeeConfirmed,payeeConfirmed,finalized, ticketDetails:{payee:ticketDetails?.payee, accountMulti:ticketDetails?.accountMulti, reference:ticketDetails?.reference}}}>
+        <TxnTicketContext.Provider value={
+            {
+                setTicketDetails,setFinalized,
+                setPayeeConfirmed,setPayee1Confirmed,
+                payeeConfirmed,
+                finalized, 
+                ticketDetails:{
+                    payee:ticketDetails?.payee,
+                    accountMultiId:ticketDetails?.accountMultiId,
+                    reference:ticketDetails?.reference,
+                    payeeConfirmed:payee1Confirmed
+                }
+            }
+            }>
             {children}
         </TxnTicketContext.Provider>
     )
