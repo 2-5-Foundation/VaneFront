@@ -47,7 +47,9 @@ export const payerTxnTicket = async(
              //@ts-ignore
              payee: data?.toHuman()[0].payee,
              //@ts-ignore
-             reference: data?.toHuman()[0].referenceNo
+             reference: data?.toHuman()[0].referenceNo,
+             //@ts-ignore
+             amount: data?.toHuman()[0].amount
         };
         ticketDetails(details);
 

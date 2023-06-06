@@ -72,10 +72,10 @@ export default function Home() {
         <div className="m-5">
           <Card variant="outlined" sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+              <Typography sx={{ fontSize: 17 }} color="text.secondary" gutterBottom>
                   Secure & Risk-Free Payment
               </Typography>
-              <Typography variant="body2">
+              <Typography sx={{ fontSize: 13 }} variant="body2">
                   <br />
                   Be free from incorrect crypto address mistakes <br></br>
                   Feel safe while sending funds <br/> 
@@ -91,10 +91,10 @@ export default function Home() {
         <div className="m-5">
         <Card variant="outlined" sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+              <Typography sx={{ fontSize: 17 }} color="text.secondary" gutterBottom>
                   Run On-Chain Ads
               </Typography>
-              <Typography variant="body2">
+              <Typography sx={{ fontSize: 13 }} variant="body2">
                   Gain visibility from Dexs, Chain explorers <br/> and
                   protocals using unique <br/> Vane Metadata transfer protocol
                   
@@ -109,10 +109,10 @@ export default function Home() {
         <div className="m-5">
         <Card variant="outlined" sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+              <Typography sx={{ fontSize: 17 }} color="text.secondary" gutterBottom>
                 Build Your Client Community.
               </Typography>
-              <Typography variant="body2">
+              <Typography sx={{ fontSize: 13 }} variant="body2">
                   Benefit verifiable testimonials and <br></br>
                   actual client retention and inputs
               </Typography>
@@ -126,10 +126,10 @@ export default function Home() {
         <div className="m-5">
         <Card variant="outlined" sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+              <Typography sx={{ fontSize: 17 }} color="text.secondary" gutterBottom>
                   Store & Grow your Capital
               </Typography>
-              <Typography variant="body2">
+              <Typography sx={{ fontSize: 13 }} variant="body2">
                   Access staking and Dexs features <br></br> to grow your capital
               </Typography>
             </CardContent>
@@ -142,10 +142,10 @@ export default function Home() {
         <div className="m-5">
         <Card variant="outlined" sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+              <Typography sx={{ fontSize: 17 }} color="text.secondary" gutterBottom>
                   Use WhatsApp Interface
               </Typography>
-              <Typography variant="body2">
+              <Typography sx={{ fontSize: 13 }} variant="body2">
                   Send funds to friend and family <br></br> using WhatsApp interface
               </Typography>
             </CardContent>

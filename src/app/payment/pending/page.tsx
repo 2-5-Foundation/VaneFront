@@ -65,10 +65,10 @@ function Page() {
                     
                 </Alert>
                 <Alert sx={{padding:1,margin:2}} severity="info">
-                  <AlertTitle sx={{fontSize:11}}>Reference No</AlertTitle>
+                  <AlertTitle sx={{fontSize:11}}>Amount</AlertTitle>
                       
                       <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
-                          {ticket.reference}
+                          {ticket.amount}
                       </Typography>
                       
                 </Alert>

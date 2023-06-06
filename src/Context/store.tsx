@@ -77,7 +77,8 @@ export interface TicketDetails {
     payer?:string, //Currently is only payer, payee and reference and no multiID.
     accountMultiId?:string,
     reference?:string,
-    payeeConfirmed?:boolean
+    payeeConfirmed?:boolean,
+    amount?:number
 }
 
 
