@@ -30,7 +30,7 @@ function Page() {
       getPayeeTickets(setPayeeTickets,api,account?.address)
   }
 
-  const confirmPayeePay = async(refNo:string,indexToRemove:number) =>{
+  const confirmPayeePay = async(refNo:string) =>{
      await confirmPayee(
           setPayeeTickets,
           payeeTickets,
@@ -39,7 +39,7 @@ function Page() {
           account?.address,
           refNo
       );
-      payeeTickets.slice(indexToRemove+1,-1)
+      
   }
 
   useEffect(()=>{
@@ -85,7 +85,7 @@ function Page() {
                       <Button
                        sx={{fontSize:11}}
                        //@ts-ignore
-                       onClick={()=>confirmPayeePay(ticket?.reference,payeeTickets.indexOf(ticket))}
+                       onClick={()=>confirmPayeePay(ticket?.reference)}
                        >
                           Confirm Payment
                         </Button>

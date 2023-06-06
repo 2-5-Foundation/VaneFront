@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import AlertTitle from '@mui/material/AlertTitle';
 
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
@@ -280,16 +281,15 @@ function Page() {
                         (
                           <Box sx={{ display: 'flex', flexDirection:'column',padding:1, marginRight:1}}>
                               
-                              <Typography sx={{ fontSize: 15 }} color="text.secondary" gutterBottom>
-                                  Payee Confirmation Status: <CheckCircleOutlineIcon/> 
-                              </Typography>
-                              <Typography sx={{ fontSize: 13 }} color="text.secondary" gutterBottom>
-                                  Payee Address: {ticketDetails?.payee} 
-                              </Typography>
-                              <Typography sx={{ fontSize: 15 }} color="text.secondary" gutterBottom>
-                                  Txn Reference No: {ticketDetails?.reference}
-                              </Typography>
-
+                              <Alert sx={{padding:1,margin:2}} severity="success">
+                                <AlertTitle sx={{fontSize:11}}>Payee Account</AlertTitle>
+                      
+                                  <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
+                                    {ticketDetails?.payee}
+                                  </Typography>
+                    
+                              </Alert>
+                              {/* Add Amount */}
                           </Box>
                           
                         ) : 
