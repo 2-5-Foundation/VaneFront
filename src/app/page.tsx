@@ -30,40 +30,40 @@ export default function Home() {
   },[])
 
   return (
-    <main className="flex min-h-screen w-auto flex-col items-center justify-between">
+    <main className="flex p-2 min-h-screen w-auto flex-col items-center justify-between">
       {/*Welcoming Witty text */}
       
-        <Card variant='outlined' className="bg-slate-50 w-full m-3 sm:w-4/6 " sx={{boxSizing:"border-box", display:'flex',flexDirection:"column",alignItems:"center"}}>
+        <Card variant='outlined' className="bg-slate-50 w-full m-2 sm:w-4/6 " sx={{boxSizing:"border-box", display:'flex',flexDirection:"column",alignItems:"center"}}>
          <h1 className="font-semibold flex flex-col sm:flex-row align-middle justify-center sm:mx-4 h-auto text-sm w-5/6"><PermIdentityIcon/><Link href="/profile">GM {account? account.meta.name : 'Anon'}</Link>  <span className="font-light text-sm sm:mx-4 sm:text-base p-2">What do you want to Experience today?</span></h1>
          {/* tl;dr Activity, Analytics, Plan */}
-         <Card variant='' className="text-xs sm:text-base mt-5 mb-1" sx={{width:"100%", display:"flex",backgroundColor:"inherit",flexDirection:"row",justifyContent:"space-around",flexWrap:"wrap"}}>
-            <Card variant='' sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Configuration<h1 className="font-semibold underline underline-offset-8">Wallet</h1></Card>
-            <Card variant='' sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Ads Analytics<h1 className="font-semibold underline underline-offset-8">100 impressions</h1></Card>
-            <Card variant='' sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Subscription<h1 className="font-semibold underline underline-offset-8">Bronze</h1></Card>
-            <Card variant='' sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Clients Members<h1 className="font-semibold underline underline-offset-8">5</h1></Card>
+         <Card elevation={0} className="text-xs w-full sm:text-base mt-5 mb-1" sx={{display:"flex",backgroundColor:"inherit",flexDirection:"row",justifyContent:"space-around",flexWrap:"wrap"}}>
+            <Card elevation={0} sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Config<h1 className="font-semibold underline underline-offset-8">Wallet</h1></Card>
+            <Card elevation={0} sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Ads-Analytics<h1 className="font-semibold underline underline-offset-8">100 impressions</h1></Card>
+            <Card elevation={0} sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Plan<h1 className="font-semibold underline underline-offset-8">Bronze</h1></Card>
+            <Card elevation={0} sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Clients<h1 className="font-semibold underline underline-offset-8">5</h1></Card>
          </Card>
         </Card>
       
        {/* Setting up profile & Wallet*/}
        <Card variant='outlined' className=" w-full sm:w-4/6 h-auto align-middle flex justify-around p-1 flex-row m-5">
-        <Card variant='' className="text-xs h-auto w-20">
-          <AccountBalanceWalletIcon className="text-sm"/>
-          <Button className="text-xs" ><Link href="/wallet">Wallet</Link></Button>
+        <Card elevation={0} className="text-xs h-auto w-20">
+          <AccountBalanceWalletIcon className="text-xs sm:text-sm"/>
+          <Button className="text-xs" size='small'><Link href="/wallet">Wallet</Link></Button>
         </Card>
 
-        <Card variant=''>
-          <ExitToAppIcon className="text-sm"/>
-          <Button size="small"><Link href="/sign-in">Sign-In</Link></Button>
+        <Card elevation={0}>
+          <ExitToAppIcon className="text-xs sm:text-sm"/>
+          <Button className="text-xs" size="small"><Link href="/sign-in">Sign-In</Link></Button>
         </Card>
 
-        <Card variant=''>
-          <CurrencyBitcoinIcon className="text-sm"/>
-        <Button size="small"><Link href="/plan">Choose Plan</Link></Button>
+        <Card elevation={0}>
+          <CurrencyBitcoinIcon className="text-xs sm:text-sm"/>
+        <Button className="text-xs" size="small"><Link href="/plan">Plan</Link></Button>
         </Card>
 
-        <Card variant=''>
-          <SettingsApplicationsIcon className="text-sm"/>
-        <Button size="small"><Link href="/setting">Settings</Link></Button>
+        <Card elevation={0}>
+          <SettingsApplicationsIcon className="text-xs sm:text-sm"/>
+        <Button className="text-xs" size="small"><Link href="/setting">Settings</Link></Button>
         </Card>
 
       </Card>
