@@ -183,15 +183,15 @@ function Page() {
 
 
   return (
-    <div  className="flex min-h-screen w-full flex-col items-center justify-center  p-2">
-        <div className="w-1/2 h-20 max-h-50 align-middle flex justify-center p-4 flex-col bg-slate-50">
+    <div  className="flex min-h-screen w-full flex-col items-center justify-center p-1 sm:p-2">
+        <div className=" w-full sm:w-1/2 h-20 max-h-50 align-middle flex justify-center p-3 sm:p-4 flex-col bg-slate-50">
           <h2 className="maxWidth font-light flex justify-center">Feel safe and experience risk free crypto payment</h2>
           <Button sx={{fontSize:12}}><Link href="/payment/pending">Pending Payment Requests</Link></Button>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-7 sm:mt-8">
 
-        <Box sx={{ width:600 }}>
+        <Box className="w-auto ">
           <Stepper activeStep={activeStep} orientation="vertical">
             
               <Step key="1">
@@ -202,13 +202,11 @@ function Page() {
                 </StepLabel>
                 <StepContent>
 
-                  <Card variant="outlined" sx={{display:"flex",flex:"column", width:500 }}>
+                  <Card variant="outlined" className="w-full" sx={{display:"flex",flex:"column"}}>
                     <CardContent>
-                      <Typography sx={{ fontSize: 10 }} color="text.secondary" gutterBottom>
-                          Send To
-                      </Typography>
                       <Box component="form"
-                           sx={{'& .MuiTextField-root': { m: 1, width: '50ch' },}}
+                           sx={{'& .MuiTextField-root': { m: 1}}}
+                           className="w-full"
                            noValidate
                            autoComplete="off"
                       >
@@ -217,28 +215,19 @@ function Page() {
                             required
                             id="Payee-Address"
                             label="Payee-Address"
+                            className="h-auto w-full"
                             //@ts-ignore
                             onChange={(e) => handleWalletParams({payee:e.target.value})}
                           />
                           <TextField
                             id="Amount"
                             label="Amount"
+                            className="h-auto w-full"
+                            type='number'
                             //@ts-ignore
                             onChange={(e) => handleWalletParams({amount:e.target.value})}
                           />
-                          {/* <FormControl sx={{ m: 1, minWidth: 120, width:50 }} size="small">
-                            <InputLabel id="resolver">Resolver Choice</InputLabel>
-                              <Select
-                                labelId="resolver-choice"
-                                id="resolver"
-                                defaultValue="null"
-                                value={resolver}
-                                label="resolver"
-                                onChange={handleResolver}
-                              >
-                                <MenuItem value={Resolver.null}>No Resolver</MenuItem>
-                              </Select>
-                          </FormControl> */}
+                          
                         </div>
                       </Box>
                     </CardContent>
@@ -272,27 +261,27 @@ function Page() {
                   <span>Verify & Confirm</span>
                 </StepLabel>
                 <StepContent>
-                  <Card variant="outlined" sx={{display:"flex",flex:"column", width:600 }}>
+                  <Card className="w-full" variant="outlined" sx={{display:"flex",flex:"column"}}>
                     <CardContent>
-                      <Typography sx={{ fontSize: 15 }} color="text.secondary" gutterBottom>
+                      <Typography className="text-xm sm:base"  color="text.secondary" gutterBottom>
                           Verify the payee address and Confirm 
                       </Typography>
                       {payeeConfirmed ? 
                         (
-                          <Box sx={{ display: 'flex', flexDirection:'column',padding:1, marginRight:1}}>
+                          <Box className="w-full" sx={{ display: 'flex', flexDirection:'column',padding:1, marginRight:1}}>
                               
-                              <Alert sx={{padding:1,margin:2}} severity="success">
-                                <AlertTitle sx={{fontSize:11}}>Payee Account</AlertTitle>
+                              <Alert sx={{padding:1,margin:2}} className="w-full" severity="success">
+                                <AlertTitle className="text-xm sm:text-base">Payee Account</AlertTitle>
                       
-                                  <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
+                                  <Typography className="text-xm sm:text-base" color="text.secondary" gutterBottom>
                                     {ticketDetails?.payee}
                                   </Typography>
                     
                               </Alert>
                               <Alert sx={{padding:1,margin:2}} severity="info">
-                                <AlertTitle sx={{fontSize:11}}>Amount</AlertTitle>
+                                <AlertTitle className="text-xm sm:text-base">Amount</AlertTitle>
                       
-                                  <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
+                                  <Typography className="text-xm sm:text-base" color="text.secondary" gutterBottom>
                                     {ticketDetails?.amount}
                                   </Typography>
                     
@@ -302,8 +291,8 @@ function Page() {
                           
                         ) : 
                         (
-                          <Box sx={{ display: 'flex', flex:'column',padding:2, marginRight:10}}>
-                            <Alert iconMapping={{
+                          <Box className="w-auto" sx={{ display: 'flex', flex:'column',padding:2, marginRight:10}}>
+                            <Alert className="w-full" iconMapping={{
                                 success: <CircularProgress />,
                               }}
                             >
@@ -347,8 +336,8 @@ function Page() {
                  >
                    <span>Status</span>
                  </StepLabel>
-                 <StepContent>
-                   <Alert>All Done Great!</Alert>
+                 <StepContent className="w-auto">
+                   <Alert className="w-full">All Done Great!</Alert>
                    <Box sx={{ mb: 2 }}>
                      <div>
                        <Button

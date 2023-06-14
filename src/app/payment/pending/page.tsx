@@ -47,14 +47,14 @@ function Page() {
   },[payeeTickets])
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-evenly p-2 m-10">
-      <div className="w-1/2 h-20 max-h-50 align-middle flex justify-center p-4 flex-col bg-slate-50">
+    <div className="flex min-h-screen w-full flex-col items-center justify-evenly sm:p-2 sm:m-10">
+      <div className="w-full sm:w-1/2 h-20 max-h-50 align-middle flex justify-center p-4 flex-col bg-slate-50">
         <h3 className="maxWidth font-light flex justify-center">All Pending Transactions to be confirmed</h3>
       </div>
-      <Box sx={{marginTop:10}}>
+      <Box className="mt-3 sm:mt-10">
         {
           payeeTickets?.map(ticket =>(
-            <Card key={payeeTickets.indexOf(ticket)} variant='outlined' sx={{minWidth:"10ch",width:500, marginTop:2}}>
+            <Card key={payeeTickets.indexOf(ticket)} variant='outlined' className="w-full sm:w-1/4">
               <CardContent>
                 <Alert sx={{padding:1,margin:2}} severity="info">
                   <AlertTitle sx={{fontSize:11}}>Payer Account</AlertTitle>

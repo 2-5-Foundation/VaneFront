@@ -30,45 +30,46 @@ export default function Home() {
   },[])
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center justify-between p-2">
+    <main className="flex min-h-screen w-auto flex-col items-center justify-between">
       {/*Welcoming Witty text */}
-      <div className="w-5/6  h-25 max-h-50 p-5 items-center  text-white  bg-gray-800 flex flex-col justify-around">
-         <h1 className="font-semibold text-lg w-4/6"><PermIdentityIcon/><Link href="/profile">GM {account? account.meta.name : 'User'}</Link>  <span className="font-light mx-7 text-xl ml-20">What do you want to Experience today?</span></h1>
+      
+        <Card variant='outlined' className="bg-slate-50 w-full m-3 sm:w-4/6 " sx={{boxSizing:"border-box", display:'flex',flexDirection:"column",alignItems:"center"}}>
+         <h1 className="font-semibold flex flex-col sm:flex-row align-middle justify-center sm:mx-4 h-auto text-sm w-5/6"><PermIdentityIcon/><Link href="/profile">GM {account? account.meta.name : 'Anon'}</Link>  <span className="font-light text-sm sm:mx-4 sm:text-base p-2">What do you want to Experience today?</span></h1>
          {/* tl;dr Activity, Analytics, Plan */}
-         <div className="flex justify-around align-middle bg-transparent h-24 p-5 w-full">
-            <div className="flex items-center flex-col">Configuration<h1 className="font-semibold underline underline-offset-8">Wallet</h1></div>
-            <div className="flex items-center flex-col">Ads Analytics<h1 className="font-semibold underline underline-offset-8">100 impressions</h1></div>
-            <div className="flex items-center flex-col">Subscription Plan<h1 className="font-semibold underline underline-offset-8">Bronze</h1></div>
-            <div className="flex items-center flex-col">Clients Community Members(DAO)<h1 className="font-semibold underline underline-offset-8">5</h1></div>
-         </div>
-      </div>
+         <Card variant='' className="text-xs sm:text-base mt-5 mb-1" sx={{width:"100%", display:"flex",backgroundColor:"inherit",flexDirection:"row",justifyContent:"space-around",flexWrap:"wrap"}}>
+            <Card variant='' sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Configuration<h1 className="font-semibold underline underline-offset-8">Wallet</h1></Card>
+            <Card variant='' sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Ads Analytics<h1 className="font-semibold underline underline-offset-8">100 impressions</h1></Card>
+            <Card variant='' sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Subscription<h1 className="font-semibold underline underline-offset-8">Bronze</h1></Card>
+            <Card variant='' sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Clients Members<h1 className="font-semibold underline underline-offset-8">5</h1></Card>
+         </Card>
+        </Card>
       
        {/* Setting up profile & Wallet*/}
-       <div className="w-5/6 h-20 max-h-50 align-middle flex  justify-around p-4 flex-row bg-slate-50">
-        <div>
-          <AccountBalanceWalletIcon/>
-          <Button size="small"><Link href="/wallet">Configure Wallet (Use App)</Link></Button>
-        </div>
+       <Card variant='outlined' className=" w-full sm:w-4/6 h-auto align-middle flex justify-around p-1 flex-row m-5">
+        <Card variant='' className="text-xs h-auto w-20">
+          <AccountBalanceWalletIcon className="text-sm"/>
+          <Button className="text-xs" ><Link href="/wallet">Wallet</Link></Button>
+        </Card>
 
-        <div>
-          <ExitToAppIcon/>
-          <Button size="small"><Link href="/sign-in">Sign-In (Use App)</Link></Button>
-        </div>
+        <Card variant=''>
+          <ExitToAppIcon className="text-sm"/>
+          <Button size="small"><Link href="/sign-in">Sign-In</Link></Button>
+        </Card>
 
-        <div>
-          <CurrencyBitcoinIcon/>
+        <Card variant=''>
+          <CurrencyBitcoinIcon className="text-sm"/>
         <Button size="small"><Link href="/plan">Choose Plan</Link></Button>
-        </div>
+        </Card>
 
-        <div>
-          <SettingsApplicationsIcon/>
+        <Card variant=''>
+          <SettingsApplicationsIcon className="text-sm"/>
         <Button size="small"><Link href="/setting">Settings</Link></Button>
-        </div>
+        </Card>
 
-      </div>
+      </Card>
 
       {/* Products*/ }
-      <div className="w-3/5 h-130 max-h-150 p-5 flex flex-wrap justify-evenly flex-row bg-white">
+      <div className="w-full sm:w-3/4 h-130 max-h-150 p-5 flex flex-wrap justify-evenly flex-row bg-white">
         <div className="m-5">
           <Card variant="outlined" sx={{ minWidth: 275 }}>
             <CardContent>
@@ -156,9 +157,10 @@ export default function Home() {
         </div>
 
       </div>
-      
-      <div className="w-5/6 h-30 max-h-50 p-5 items-center  text-white  bg-transparent flex flex-col justify-around">
-      </div>
+      {/* Footer */}
+      <Card variant='outlined' className="bg-slate-50 w-full m-3 sm:w-4/6 ">
+        
+      </Card>
     </main>
   )
 }
