@@ -47,53 +47,30 @@ function Page() {
   },[payeeTickets])
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-evenly sm:p-2 sm:m-10">
+    <div className=" p-2 flex min-h-screen w-full flex-col items-center justify-evenly sm:p-2 sm:m-10">
       <div className="w-full sm:w-1/2 h-20 max-h-50 align-middle flex justify-center p-4 flex-col bg-slate-50">
         <h3 className="maxWidth font-light flex justify-center">All Pending Transactions to be confirmed</h3>
       </div>
-      <Box className="mt-3 sm:mt-10">
+      <Box className="mt-3 sm:mt-10 w-full sm:w-auto">
         {
           payeeTickets?.map(ticket =>(
-            <Card key={payeeTickets.indexOf(ticket)} variant='outlined' className="w-full sm:w-1/4">
-              <CardContent>
-                <Alert sx={{padding:1,margin:2}} severity="info">
-                  <AlertTitle sx={{fontSize:11}}>Payer Account</AlertTitle>
-                      
-                      <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
-                          {ticket.payer}
-                      </Typography>
+                <Alert key={payeeTickets.indexOf(ticket)} className="w-full sm:w-100vw" sx={{margin:1}} severity="info">
+                 
+                    <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
+                        <Typography className="text-xs sm:text-sm font-semibold" >Payer Address</Typography> {ticket.payer}
+                    </Typography>
+                    <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
+                    <Typography className="text-xs sm:text-sm font-semibold" >Amount</Typography> {ticket.amount}
+                    </Typography>
+                    <Button
+                      size='small'
+                      //@ts-ignore
+                      onClick={()=>confirmPayeePay(ticket?.reference)}
+                      >
+                        Confirm Payment
+                      </Button>
                     
                 </Alert>
-                <Alert sx={{padding:1,margin:2}} severity="info">
-                  <AlertTitle sx={{fontSize:11}}>Amount</AlertTitle>
-                      
-                      <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
-                          {ticket.amount}
-                      </Typography>
-                      
-                </Alert>
-              </CardContent>
-              {
-                ticket.payeeConfirmed? 
-                  (
-                    <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-                      Confirmed successfully
-                    </Alert>) 
-                   :
-                  (
-                    <CardActions sx={{marginTop:-2}}>
-                      <Button
-                       sx={{fontSize:11}}
-                       //@ts-ignore
-                       onClick={()=>confirmPayeePay(ticket?.reference)}
-                       >
-                          Confirm Payment
-                        </Button>
-                    </CardActions> 
-                  )
-              }
-             
-            </Card>
           ))
         }
       </Box>
