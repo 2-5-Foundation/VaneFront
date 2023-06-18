@@ -185,10 +185,9 @@ function Page() {
   return (
     <div  className="flex min-h-screen w-full flex-col items-center justify-center p-1 sm:p-2">
         <div className=" w-full sm:w-1/2 h-20 max-h-50 align-middle flex justify-center p-3 sm:p-4 flex-col bg-slate-50">
-          <h2 className="maxWidth text-xs sm:text-base font-light flex justify-center">Feel safe and experience risk free crypto payment</h2>
+          <h2 className="maxWidth text-xs sm:text-base font-light flex justify-center">Send Funds via Email securely and onboard with ease</h2>
           <div className="flex align-middle justify-center">
             <Button sx={{fontSize:12}}><Link href="/payment/pending">Pending Payments</Link></Button>
-            <Button sx={{fontSize:12}}><Link href="/payment/email-onboard">Send Via Email</Link></Button>
             <Button sx={{fontSize:12}}><Link href="/profile/fund-account">Fund Account</Link></Button>
           </div>
         </div>
@@ -218,8 +217,8 @@ function Page() {
                           <TextField
                             required
                             size='small'
-                            id="Payee-Address"
-                            label="Payee-Address"
+                            id="Email"
+                            label="Email"
                             className="h-auto w-full"
                             //@ts-ignore
                             onChange={(e) => handleWalletParams({payee:e.target.value})}
@@ -250,7 +249,7 @@ function Page() {
                         Send
                       </Button>
 
-                      <Button size='small' sx={{ mt: 1, mr: 1 }}>
+                      <Button  size='small' sx={{ mt: 1, mr: 1 }}>
                         <Link href="/">
                         Cancel
                         </Link>
