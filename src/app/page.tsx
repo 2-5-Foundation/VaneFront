@@ -140,22 +140,6 @@ export default function Home() {
           </Card>
         </div>
 
-        <div className="m-5">
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
-            <CardContent>
-              <Typography sx={{ fontSize: 17 }} color="text.secondary" gutterBottom>
-                  Use WhatsApp Interface
-              </Typography>
-              <Typography sx={{ fontSize: 13 }} variant="body2">
-                  Send funds to friend and family <br></br> using WhatsApp interface
-              </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="small"><Link href="/web2">Learn More</Link></Button>
-            </CardActions>
-          </Card>
-        </div>
-
       </div>
       {/* Footer */}
       <Card variant='outlined' className="bg-slate-50 w-full m-3 sm:w-4/6 ">
