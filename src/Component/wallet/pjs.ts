@@ -18,7 +18,7 @@ export const enablePolkadotExtension = async (): Promise<boolean> => {
   return enablePolkadotExtensionCache;
 };
 
-export const getSigner = async (
+export const getSignerFromWallet = async (
   account: InjectedAccountWithMeta
 ): Promise<Signer> => {
   await enablePolkadotExtension();
@@ -28,3 +28,14 @@ export const getSigner = async (
 
   return signer;
 };
+
+// export const getSignerFromWalletLess = async (
+//   account: string
+// ): Promise<Signer> => {
+//   await enablePolkadotExtension();
+//   const { web3FromAddress } = await import("@polkadot/extension-dapp");
+//   const injector = await web3FromAddress(account);
+//   const signer = injector.signer;
+
+//   return signer;
+// };

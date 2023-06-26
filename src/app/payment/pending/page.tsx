@@ -16,10 +16,10 @@ import AlertTitle from '@mui/material/AlertTitle';
 import { useChainApiContext, useWalletContext,useTxnTicketContext, TicketDetails } from '@/Context/store';
 import { payerTxnTicket } from '@/Component/VaneChainApi/PaymentApi/Query';
 import { ApiPromise } from '@polkadot/api';
-import { confirmPayee } from '@/Component/VaneChainApi/PaymentApi/Tx';
+import { confirmPayee, confirmPayeeWalletLess } from '@/Component/VaneChainApi/PaymentApi/Tx';
 
 function Page() {
-  const {account, signer}  = useWalletContext();
+  const {account, signer,pair,isWallet}  = useWalletContext();
   const {api} = useChainApiContext();
 
 
@@ -27,19 +27,41 @@ function Page() {
   const [confirmed, setConfirmed] = useState<boolean>();
 
   const getAllPayeeTickets = async()=>{
+    if(isWallet === true){
+      //@ts-ignore
       getPayeeTickets(setPayeeTickets,api,account?.address)
+    }else{
+      //@ts-ignore
+      getPayeeTickets(setPayeeTickets,api,account)
+    }
   }
 
+  //Confirm Payee
   const confirmPayeePay = async(refNo:string) =>{
      await confirmPayee(
           setPayeeTickets,
           payeeTickets,
           api,
           signer,
+          //@ts-ignore
           account?.address,
           refNo
       );
       
+  }
+
+   //Confirm Payee WalletLess
+   const confirmPayeePayWalletLess = async(refNo:string) =>{
+    await confirmPayeeWalletLess(
+         setPayeeTickets,
+         payeeTickets,
+         api,
+         pair,
+         //@ts-ignore
+         account,
+         refNo
+     );
+     
   }
 
   useEffect(()=>{
@@ -65,7 +87,7 @@ function Page() {
                     <Button
                       size='small'
                       //@ts-ignore
-                      onClick={()=>confirmPayeePay(ticket?.reference)}
+                      onClick={isWallet? ()=>confirmPayeePay(ticket?.reference): ()=>confirmPayeePayWalletLess(ticket?.reference)}
                       >
                         Confirm Payment
                       </Button>

@@ -15,16 +15,17 @@ import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 //---------------------------------------------------------------------------
-import { useChainApiContext, useWalletContext } from '../Context/store';
+import { useChainApiContext, useWalletContext, useWalletLessContext } from '../Context/store';
 import { useEffect } from 'react';
 
 
 
 
 export default function Home() {
-  const {account}  = useWalletContext();
+  const {account,isWallet}  = useWalletContext();
   const {api,fetchChainApi} = useChainApiContext()
-  
+  const {data} = useWalletLessContext();
+
   useEffect(()=>{
     fetchChainApi()  
   },[])
@@ -34,9 +35,18 @@ export default function Home() {
       {/*Welcoming Witty text */}
       
         <Card variant='outlined' className="bg-slate-50 w-full m-2 sm:w-4/6 " sx={{boxSizing:"border-box", display:'flex',flexDirection:"column",alignItems:"center"}}>
-         <h1 className="font-semibold p-2 flex flex-col sm:flex-row align-middle justify-center sm:mx-4 h-auto text-sm w-5/6"><PermIdentityIcon/><Link href="/profile">GM {account? account.meta.name : 'Anon'}</Link> </h1>
+         
+         <h1 className="font-semibold p-2 flex flex-col sm:flex-row align-middle justify-center sm:mx-4 h-auto text-sm w-5/6"><PermIdentityIcon/><Link href="/profile">GM
+          <span className="px-2 sm:px-5">
+         {
+          //@ts-ignore
+         account? isWallet? account.meta.name : data?.name :'Anon'
+         }
+         </span>
+         </Link> </h1>
+
          {/* tl;dr Activity, Analytics, Plan */}
-         <Card elevation={0} className="text-xs w-full sm:text-base mt-5 mb-1" sx={{display:"flex",backgroundColor:"inherit",flexDirection:"row",justifyContent:"space-around",flexWrap:"wrap"}}>
+         <Card elevation={0} className="text-xs w-full sm:py-5 sm:text-base mt-5 mb-1" sx={{display:"flex",backgroundColor:"inherit",flexDirection:"row",justifyContent:"space-around",flexWrap:"wrap"}}>
             <Card className="hidden sm:flex sm:flex-col" elevation={0} sx={{display:"flex",backgroundColor:"inherit", alignItems:"center"}}>Config<h1 className="font-medium text-sm ">Wallet</h1></Card>
             <Card elevation={0} sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Ads-Analytics<h1 className="font-medium text-sm ">100 impressions</h1></Card>
             <Card elevation={0} sx={{display:"flex",backgroundColor:"inherit", alignItems:"center",flexDirection:"column"}}>Plan<h1 className="font-medium text-sm ">Bronze</h1></Card>
@@ -47,22 +57,22 @@ export default function Home() {
        {/* Setting up profile & Wallet*/}
        <Card variant='outlined' className=" w-full sm:w-4/6 h-auto align-middle flex justify-around p-1 flex-row m-5">
         <Card elevation={0} className=" hidden sm:flex text-xs h-auto w-20">
-          <AccountBalanceWalletIcon className="text-xs sm:text-sm"/>
+          
           <Button className="text-xs" ><Link href="/wallet">Wallet</Link></Button>
         </Card>
 
         <Card elevation={0}>
-          <ExitToAppIcon className="text-xs sm:text-sm"/>
+
           <Button className="text-xs" ><Link href="/sign-in">Sign-In</Link></Button>
         </Card>
 
         <Card elevation={0}>
-          <CurrencyBitcoinIcon className="text-xs sm:text-sm"/>
+          
         <Button className="text-xs" ><Link href="/plan">Plan</Link></Button>
         </Card>
 
         <Card elevation={0}>
-          <SettingsApplicationsIcon className="text-xs sm:text-sm"/>
+         
         <Button className="text-xs" ><Link href="/setting">Settings</Link></Button>
         </Card>
 

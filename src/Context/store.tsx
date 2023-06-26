@@ -2,6 +2,7 @@
 
 import { ApiPromise, WsProvider } from "@polkadot/api";
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
+import { KeyringPair } from "@polkadot/keyring/types";
 import { Signer } from "@polkadot/types/types";
 import { createContext, useContext, Dispatch, SetStateAction, useState, ReactNode } from "react";
 
@@ -11,27 +12,37 @@ type Props = {
 
 // Wallet Context
 interface WalletInfo {
-    account?: InjectedAccountWithMeta;
-    setAccount: Dispatch<InjectedAccountWithMeta>;
+    account?: InjectedAccountWithMeta|string;
+    setAccount: Dispatch<InjectedAccountWithMeta|string>;
     signer?: Signer;
     setSigner: Dispatch<Signer>
+    pair?:KeyringPair;
+    setPair: Dispatch<KeyringPair>;
+    isWallet:boolean;
+    setIsWallet:Dispatch<boolean>;
 }
 
 const defaultStateWallet:WalletInfo = {
     account: undefined,
-    setAccount: (account:InjectedAccountWithMeta) =>{return },
+    setAccount: (account:InjectedAccountWithMeta|string) =>{return },
     signer: undefined,
-    setSigner: (signer:Signer) => {return}
+    setSigner: (signer:Signer) => {return},
+    pair: undefined,
+    setPair: (pair: KeyringPair) => {return},
+    isWallet: false,
+    setIsWallet: (v:boolean) => {return}
 }
 
 const WalletContext = createContext<WalletInfo>(defaultStateWallet);
 
 export const WalletContextProvider = ({children}:Props) =>{
-    const [account, setAccount] = useState<InjectedAccountWithMeta>();
+    const [account, setAccount] = useState<InjectedAccountWithMeta|string>();
     const [signer, setSigner] = useState<Signer>();
+    const [pair, setPair] = useState<KeyringPair>();
+    const [isWallet, setIsWallet] =  useState<boolean>(false)
 
     return (
-        <WalletContext.Provider value={{account,setAccount,signer,setSigner}}>
+        <WalletContext.Provider value={{account,setAccount,signer,setSigner,pair,setPair,isWallet,setIsWallet}}>
             {children}
         </WalletContext.Provider>
     )
@@ -131,3 +142,50 @@ export const TxnTicketContextProvider = ({children}:Props) =>{
 };
 
 export const useTxnTicketContext = () => useContext(TxnTicketContext);
+
+//Local Storage
+export interface LocalStorage {
+    privateKey:string;
+    email:string;
+}
+
+// Email account
+export interface UserDetails {
+    name?: string;
+    email?: string;
+    passcode?:string;
+}
+
+const defaulUserDetails:UserDetails ={
+    name: undefined,
+    email: undefined,
+    passcode: undefined,
+}
+
+export interface WalletLess {
+    data?:UserDetails;
+    setWalletLess:Dispatch<UserDetails>;
+}
+
+const defaultWalletLess:WalletLess ={
+    data:undefined,
+    setWalletLess: (v:UserDetails) =>{return}
+}
+
+export const WalletLessContext = createContext(defaultWalletLess);
+
+export const WalletLessProvider =({children}:Props)=>{
+    const [userDetails,setUserDetails] = useState<UserDetails>(defaulUserDetails);
+
+    const setWalletLess = (v:UserDetails) =>{
+        setUserDetails({...userDetails,...v})
+    }
+
+    return (
+        <WalletLessContext.Provider value={{data:userDetails, setWalletLess}}>
+            {children}
+        </WalletLessContext.Provider>
+    )
+}
+
+export const useWalletLessContext =() => useContext(WalletLessContext);

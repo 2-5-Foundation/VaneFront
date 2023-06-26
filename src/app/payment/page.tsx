@@ -1,5 +1,8 @@
 'use client'
 
+// The function sbeing called will depend on isWallet value from WalletContext
+
+
 
 import React,{useEffect,useState} from 'react'
 import Link from 'next/link';
@@ -31,7 +34,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 // ---------TX & QUERIES--------------------------
-import { vanePay } from '@/Component/VaneChainApi/PaymentApi/Tx';
+import { confirmPayerWalletLess, vanePay, vanePayWalletLess } from '@/Component/VaneChainApi/PaymentApi/Tx';
 // CONTEXT
 import { useChainApiContext, useWalletContext,useTxnTicketContext, TicketDetails } from '@/Context/store';
 import { payerTxnTicket } from '@/Component/VaneChainApi/PaymentApi/Query';
@@ -42,7 +45,7 @@ import { confirmPayer } from '@/Component/VaneChainApi/PaymentApi/Tx';
 
 function Page() {
   // CONTEXT
-  const {account, signer}  = useWalletContext();
+  const {account, signer, pair,isWallet}  = useWalletContext();
   const {api} = useChainApiContext();
   const {setTicketDetails,ticketDetails,finalized,setFinalized, payeeConfirmed, setPayeeConfirmed} = useTxnTicketContext();
   //---------------------------------------------
@@ -82,8 +85,6 @@ function Page() {
   }
   //---------------------------------------------------//
 
-  // Wallet or Wallet-Less
-  const [isWallet, setIsWallet] = useState<boolean>(false);
 
   const [activeStep, setActiveStep] = useState(0);
   // TXN
@@ -136,6 +137,7 @@ function Page() {
         setFinalized,
         api,
         signer,
+        //@ts-ignore
         account?.address,
         vanePayWalletParams.payee,
         vanePayWalletParams.amount,
@@ -145,6 +147,23 @@ function Page() {
       
   };
 
+  // Vane Pay WalletLess
+  const handleVanePayWalletLess = async() =>{
+    await vanePayWalletLess(
+      setFinalized,
+      api,
+      pair,
+      //@ts-ignore
+      account,
+      vanePayWalletParams.payee,
+      vanePayWalletParams.amount,
+      vanePayWalletParams.resolver        
+    );
+    handleNext()
+    
+  };
+
+
   // handle Payer Confirmation
   const confirmPayerPay =async()=>{
       await confirmPayer(
@@ -152,19 +171,47 @@ function Page() {
           setAllDone,
           api,
           signer,
+          //@ts-ignore
           account?.address,
           ticketDetails?.reference
       )
   }
+
+  // handle Payer Confirmation for WalletLess
+  const confirmPayerPayWalletLess =async()=>{
+    await confirmPayerWalletLess(
+        setActiveStep,
+        setAllDone,
+        api,
+        pair,
+        //@ts-ignore
+        account,
+        ticketDetails?.reference
+    )
+  }
   
   // Fetch the reference number from storage
   if(finalized){
-    payerTxnTicket(
-      setTicketDetails,
-      api,
-      account?.address, // payer as current account injected
-      vanePayWalletParams.payee
-    )
+    if(isWallet === true){
+
+      payerTxnTicket(
+        setTicketDetails,
+        api,
+        //@ts-ignore
+        account?.address, // payer as current account injected
+        vanePayWalletParams.payee
+      )
+
+    }else{
+        payerTxnTicket(
+          setTicketDetails,
+          api,
+          //@ts-ignore
+          account, // payer as current account injected
+          vanePayWalletParams.payee
+        )
+    }
+    
     confirmationSubscriber();
   };
 
@@ -244,7 +291,7 @@ function Page() {
                       <Button
                         variant="outlined"
                         size='small'
-                        onClick={handleVanePay}
+                        onClick={isWallet? handleVanePay : handleVanePayWalletLess}
                         sx={{ mt: 1, mr: 1 }}
                       >
                         Send
@@ -318,7 +365,7 @@ function Page() {
                       <Button
                         variant="outlined"
                         disabled={payeeConfirmed === undefined}
-                        onClick={confirmPayerPay}
+                        onClick={isWallet? confirmPayerPay : confirmPayerPayWalletLess}
                         sx={{ mt: 1, mr: 1 }}
                       >
                         Confirm

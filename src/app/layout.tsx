@@ -1,12 +1,13 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import { WalletContextProvider,ChainApiContextProvider,useTxnTicketContext, TxnTicketContextProvider } from '../Context/store'
+import { WalletContextProvider,ChainApiContextProvider,TxnTicketContextProvider, WalletLessProvider } from '../Context/store'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Vane Trust',
-  description: 'Composable digital experience for solo online retailers',
+  description: 'Composable blockchain experience for solo online retailers',
 }
 
 export default function RootLayout({
@@ -17,13 +18,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <WalletContextProvider>
-        <ChainApiContextProvider>
-          <TxnTicketContextProvider>
-            {children}
-          </TxnTicketContextProvider>
-        </ChainApiContextProvider>
-      </WalletContextProvider>        
+        <WalletLessProvider>
+          <WalletContextProvider>
+            <ChainApiContextProvider>
+              <TxnTicketContextProvider>
+                {children}
+              </TxnTicketContextProvider>
+            </ChainApiContextProvider>
+          </WalletContextProvider> 
+        </WalletLessProvider>       
       </body>
     </html>
   )

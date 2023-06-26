@@ -12,21 +12,21 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { blue } from '@mui/material/colors';
 import { useWalletContext } from '../../Context/store';
-import { enablePolkadotExtension ,getSigner} from '@/Component/wallet/pjs';
+import { enablePolkadotExtension ,getSignerFromWallet} from '@/Component/wallet/pjs';
 
 
 function Page() {
 
   const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>();
-  const [isWallet, setIsWallet] = useState<boolean>();
+  const [walletPresent, setwalletPresent] = useState<boolean>();
   const [selectedAcc, setSelectedAcc] = useState<InjectedAccountWithMeta>();
 
-  const {account,setAccount,signer,setSigner} = useWalletContext();
+  const {account,setAccount,signer,setSigner,setIsWallet} = useWalletContext();
 
   const getAccounts = async() =>{
     // Check if the Wallet is installed
     const wallet:boolean = await enablePolkadotExtension();
-    setIsWallet(wallet);
+    setwalletPresent(wallet);
     // Get Accounts
     const { web3Accounts, web3AccountsSubscribe } = await import(
       "@polkadot/extension-dapp"
@@ -39,15 +39,16 @@ function Page() {
 
   const getTheSigner = async(account:InjectedAccountWithMeta) =>{
       // get the signer & update the context state of the signer and Account name
-      const signer = await getSigner(account);
+      const signer = await getSignerFromWallet(account);
       setSigner(signer)
   }
 
   const handleChange = (event: SelectChangeEvent) => {
     //@ts-ignore
-    setAccount(event.target.value);
+    setAccount(event.target.value.address);
     //@ts-ignore
     getTheSigner(event.target.value)
+    setIsWallet(true)
   };
 
   useEffect(()=>{
@@ -64,7 +65,7 @@ function Page() {
            
         <div>
             {
-              isWallet? 
+              walletPresent? 
               (
                 <FormControl sx={{ m: 1, minWidth: 120,width:300,borderColor:'lightblue' }} size="medium">
                 <InputLabel id="wallet">Choose Wallet Account</InputLabel>
@@ -90,7 +91,7 @@ function Page() {
         </div>
         <div className="p-10">
           {
-            isWallet? (<Button size="small"><Link href="/">Return Home</Link></Button>) 
+            walletPresent? (<Button size="small"><Link href="/">Return Home</Link></Button>) 
             : (<h1 className="font-sans font-light text-base">Wallet unavailable? Try out our <Button><Link href="/sign-in">Wallet-less Sign-In</Link></Button></h1>)
           }
         </div>
