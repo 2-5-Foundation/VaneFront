@@ -31,7 +31,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 // ---------TX & QUERIES--------------------------
-import { vanePay } from '@/Component/VaneChainApi/PaymentApi/Tx';
+import {confirmPayerWalletLess, vanePayWalletLess } from '@/Component/VaneChainApi/PaymentApi/Tx';
 // CONTEXT
 import { useChainApiContext, useWalletContext,useTxnTicketContext, TicketDetails } from '@/Context/store';
 import { payerTxnTicket } from '@/Component/VaneChainApi/PaymentApi/Query';
@@ -40,9 +40,10 @@ import { ApiPromise } from '@polkadot/api';
 import { confirmPayer } from '@/Component/VaneChainApi/PaymentApi/Tx';
 //------------------------------------------------
 
+
 function Page() {
   // CONTEXT
-  const {account, signer}  = useWalletContext();
+  const {account,accountPair, signer, pair,isWallet}  = useWalletContext();
   const {api} = useChainApiContext();
   const {setTicketDetails,ticketDetails,finalized,setFinalized, payeeConfirmed, setPayeeConfirmed} = useTxnTicketContext();
   //---------------------------------------------
@@ -82,8 +83,6 @@ function Page() {
   }
   //---------------------------------------------------//
 
-  // Wallet or Wallet-Less
-  const [isWallet, setIsWallet] = useState<boolean>(false);
 
   const [activeStep, setActiveStep] = useState(0);
   // TXN
@@ -130,41 +129,45 @@ function Page() {
   
   };
 
-  // Call TXN VANE PAY
-  const handleVanePay = async() =>{
-      await vanePay(
-        setFinalized,
-        api,
-        signer,
-        account?.address,
-        vanePayWalletParams.payee,
-        vanePayWalletParams.amount,
-        vanePayWalletParams.resolver        
-      );
-      handleNext()
-      
+  // Vane Pay WalletLess
+  const handleVanePayWalletLess = async() =>{
+    await vanePayWalletLess(
+      setFinalized,
+      api,
+      pair,
+      accountPair,
+      vanePayWalletParams.payee,
+      vanePayWalletParams.amount,
+      vanePayWalletParams.resolver        
+    );
+    handleNext()
+    
   };
 
-  // handle Payer Confirmation
-  const confirmPayerPay =async()=>{
-      await confirmPayer(
-          setActiveStep,
-          setAllDone,
-          api,
-          signer,
-          account?.address,
-          ticketDetails?.reference
-      )
+
+  // handle Payer Confirmation for WalletLess
+  const confirmPayerPayWalletLess =async()=>{
+    await confirmPayerWalletLess(
+        setActiveStep,
+        setAllDone,
+        api,
+        pair,
+        accountPair,
+        ticketDetails?.reference
+    )
   }
   
   // Fetch the reference number from storage
   if(finalized){
+    
     payerTxnTicket(
-      setTicketDetails,
-      api,
-      account?.address, // payer as current account injected
-      vanePayWalletParams.payee
-    )
+        setTicketDetails,
+        api,
+        accountPair, // payer as current account injected
+        vanePayWalletParams.payee
+      )
+    
+    
     confirmationSubscriber();
   };
 
@@ -180,7 +183,6 @@ function Page() {
 
 
   
-
 
   return (
     <div  className="flex min-h-screen w-full flex-col items-center justify-center p-1 sm:p-2">
@@ -243,7 +245,7 @@ function Page() {
                       <Button
                         variant="outlined"
                         size='small'
-                        onClick={handleVanePay}
+                        onClick={handleVanePayWalletLess}
                         sx={{ mt: 1, mr: 1 }}
                       >
                         Send
@@ -317,7 +319,7 @@ function Page() {
                       <Button
                         variant="outlined"
                         disabled={payeeConfirmed === undefined}
-                        onClick={confirmPayerPay}
+                        onClick={confirmPayerPayWalletLess}
                         sx={{ mt: 1, mr: 1 }}
                       >
                         Confirm
@@ -325,9 +327,17 @@ function Page() {
                       <Button
                        // disabled={index === 0}
                         onClick={handleBack}
+                        color='error'
                         sx={{ mt: 1, mr: 1 }}
                       >
                         Revert
+                      </Button>
+                      <Button
+                       // disabled={index === 0}
+                        onClick={handleBack}
+                        sx={{ mt: 1, mr: 1 }}
+                      >
+                        Minimize Window
                       </Button>
                     </div>
                   </Box>

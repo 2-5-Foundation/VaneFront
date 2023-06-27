@@ -28,7 +28,7 @@ export interface Stored {
 
 function Page() {
   const {setWalletLess,data} =  useWalletLessContext();
-  const{setAccount,setSigner,setIsWallet,setPair} = useWalletContext()
+  const{setAccountPair,setSigner,setIsWallet,setPair} = useWalletContext()
 
   
   //Router
@@ -50,7 +50,7 @@ function Page() {
         const decryptedData = naclDecrypt(u8StoredData,nonce,hashedPasscode);
         const retrivedData:Stored = JSON.parse(u8aToString(decryptedData));
         // Update the context state
-        setAccount(retrivedData.data.address);
+        setAccountPair(retrivedData.data.address);
         setPair(retrivedData.data.signer);
         setWalletLess({name:retrivedData.data.name})
         setWalletLess({email:retrivedData.data.email})
@@ -96,7 +96,7 @@ function Page() {
         setWalletPresent(wallet)
         
         //update the context
-        setAccount(KeyringPair.address);
+        setAccountPair(KeyringPair.address);
         setPair(KeyringPair);
 
         const StoredData:Stored = {

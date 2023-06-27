@@ -45,7 +45,7 @@ import { confirmPayer } from '@/Component/VaneChainApi/PaymentApi/Tx';
 
 function Page() {
   // CONTEXT
-  const {account, signer, pair,isWallet}  = useWalletContext();
+  const {account,accountPair, signer, pair,isWallet}  = useWalletContext();
   const {api} = useChainApiContext();
   const {setTicketDetails,ticketDetails,finalized,setFinalized, payeeConfirmed, setPayeeConfirmed} = useTxnTicketContext();
   //---------------------------------------------
@@ -137,7 +137,6 @@ function Page() {
         setFinalized,
         api,
         signer,
-        //@ts-ignore
         account?.address,
         vanePayWalletParams.payee,
         vanePayWalletParams.amount,
@@ -153,8 +152,7 @@ function Page() {
       setFinalized,
       api,
       pair,
-      //@ts-ignore
-      account,
+      accountPair,
       vanePayWalletParams.payee,
       vanePayWalletParams.amount,
       vanePayWalletParams.resolver        
@@ -171,7 +169,6 @@ function Page() {
           setAllDone,
           api,
           signer,
-          //@ts-ignore
           account?.address,
           ticketDetails?.reference
       )
@@ -184,8 +181,7 @@ function Page() {
         setAllDone,
         api,
         pair,
-        //@ts-ignore
-        account,
+        accountPair,
         ticketDetails?.reference
     )
   }
@@ -197,7 +193,6 @@ function Page() {
       payerTxnTicket(
         setTicketDetails,
         api,
-        //@ts-ignore
         account?.address, // payer as current account injected
         vanePayWalletParams.payee
       )
@@ -206,8 +201,7 @@ function Page() {
         payerTxnTicket(
           setTicketDetails,
           api,
-          //@ts-ignore
-          account, // payer as current account injected
+          accountPair, // payer as current account injected
           vanePayWalletParams.payee
         )
     }
@@ -373,9 +367,17 @@ function Page() {
                       <Button
                        // disabled={index === 0}
                         onClick={handleBack}
+                        color='error'
                         sx={{ mt: 1, mr: 1 }}
                       >
                         Revert
+                      </Button>
+                      <Button
+                       // disabled={index === 0}
+                        onClick={handleBack}
+                        sx={{ mt: 1, mr: 1 }}
+                      >
+                        Minimize Window
                       </Button>
                     </div>
                   </Box>

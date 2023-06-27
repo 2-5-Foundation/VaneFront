@@ -19,7 +19,7 @@ import { ApiPromise } from '@polkadot/api';
 import { confirmPayee, confirmPayeeWalletLess } from '@/Component/VaneChainApi/PaymentApi/Tx';
 
 function Page() {
-  const {account, signer,pair,isWallet}  = useWalletContext();
+  const {account, signer,pair,isWallet,accountPair}  = useWalletContext();
   const {api} = useChainApiContext();
 
 
@@ -43,7 +43,6 @@ function Page() {
           payeeTickets,
           api,
           signer,
-          //@ts-ignore
           account?.address,
           refNo
       );
@@ -57,8 +56,7 @@ function Page() {
          payeeTickets,
          api,
          pair,
-         //@ts-ignore
-         account,
+         accountPair,
          refNo
      );
      

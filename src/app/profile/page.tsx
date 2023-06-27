@@ -7,7 +7,7 @@ import { useWalletContext, useWalletLessContext } from '@/Context/store'
 
 function Page() {
 
-  const {account,isWallet}  = useWalletContext();
+  const {account,isWallet,accountPair}  = useWalletContext();
   const {data} = useWalletLessContext()
 
   return (
@@ -21,8 +21,7 @@ function Page() {
         </Typography>
         <h1>Address:
           {
-            //@ts-ignore
-            isWallet? account?.address : account
+            isWallet? account?.address : accountPair
           }
         </h1>
       

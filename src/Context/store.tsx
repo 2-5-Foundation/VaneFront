@@ -12,8 +12,10 @@ type Props = {
 
 // Wallet Context
 interface WalletInfo {
-    account?: InjectedAccountWithMeta|string;
-    setAccount: Dispatch<InjectedAccountWithMeta|string>;
+    account?: InjectedAccountWithMeta;
+    setAccount: Dispatch<InjectedAccountWithMeta>;
+    accountPair?:string;
+    setAccountPair: Dispatch<string>;
     signer?: Signer;
     setSigner: Dispatch<Signer>
     pair?:KeyringPair;
@@ -24,7 +26,9 @@ interface WalletInfo {
 
 const defaultStateWallet:WalletInfo = {
     account: undefined,
-    setAccount: (account:InjectedAccountWithMeta|string) =>{return },
+    setAccount: (account:InjectedAccountWithMeta) =>{return },
+    accountPair:undefined,
+    setAccountPair: (account:string) =>{return},
     signer: undefined,
     setSigner: (signer:Signer) => {return},
     pair: undefined,
@@ -36,13 +40,14 @@ const defaultStateWallet:WalletInfo = {
 const WalletContext = createContext<WalletInfo>(defaultStateWallet);
 
 export const WalletContextProvider = ({children}:Props) =>{
-    const [account, setAccount] = useState<InjectedAccountWithMeta|string>();
+    const [account, setAccount] = useState<InjectedAccountWithMeta>();
+    const [accountPair, setAccountPair] = useState<string>()
     const [signer, setSigner] = useState<Signer>();
     const [pair, setPair] = useState<KeyringPair>();
     const [isWallet, setIsWallet] =  useState<boolean>(false)
 
     return (
-        <WalletContext.Provider value={{account,setAccount,signer,setSigner,pair,setPair,isWallet,setIsWallet}}>
+        <WalletContext.Provider value={{account,setAccount,accountPair,setAccountPair,signer,setSigner,pair,setPair,isWallet,setIsWallet}}>
             {children}
         </WalletContext.Provider>
     )
