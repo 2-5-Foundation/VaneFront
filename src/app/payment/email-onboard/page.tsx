@@ -38,6 +38,8 @@ import { payerTxnTicket } from '@/Component/VaneChainApi/PaymentApi/Query';
 import { ApiPromise } from '@polkadot/api';
 // txn
 import { confirmPayer } from '@/Component/VaneChainApi/PaymentApi/Tx';
+
+
 //------------------------------------------------
 
 
@@ -131,17 +133,17 @@ function Page() {
 
   // Vane Pay WalletLess
   const handleVanePayWalletLess = async() =>{
-    await vanePayWalletLess(
-      setFinalized,
-      api,
-      pair,
-      accountPair,
-      vanePayWalletParams.payee,
-      vanePayWalletParams.amount,
-      vanePayWalletParams.resolver        
-    );
-    handleNext()
-    
+    // await vanePayWalletLess(
+    //   setFinalized,
+    //   api,
+    //   pair,
+    //   accountPair,
+    //   vanePayWalletParams.payee,
+    //   vanePayWalletParams.amount,
+    //   vanePayWalletParams.resolver        
+    // );
+    //handleNext()
+    await fetch("/api/email/abdulrazzaqlukamba@gmail.com")
   };
 
 

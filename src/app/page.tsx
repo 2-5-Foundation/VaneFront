@@ -36,14 +36,13 @@ export default function Home() {
       
         <Card variant='outlined' className="bg-slate-50 w-full m-2 sm:w-4/6 " sx={{boxSizing:"border-box", display:'flex',flexDirection:"column",alignItems:"center"}}>
          
-         <h1 className="font-semibold p-2 flex flex-col sm:flex-row align-middle justify-center sm:mx-4 h-auto text-sm w-5/6"><PermIdentityIcon/><Link href="/profile">GM
+         <h1 className="font-semibold p-2 flex flex-col sm:flex-row align-middle justify-center sm:mx-4 h-auto text-sm w-5/6"><PermIdentityIcon/>GM
           <span className="px-2 sm:px-5">
          {
-          //@ts-ignore
          account? isWallet? account.meta.name : data?.name :'Anon'
          }
          </span>
-         </Link> </h1>
+         </h1>
 
          {/* tl;dr Activity, Analytics, Plan */}
          <Card elevation={0} className="text-xs w-full sm:py-5 sm:text-base mt-5 mb-1" sx={{display:"flex",backgroundColor:"inherit",flexDirection:"row",justifyContent:"space-around",flexWrap:"wrap"}}>
@@ -56,6 +55,11 @@ export default function Home() {
       
        {/* Setting up profile & Wallet*/}
        <Card variant='outlined' className=" w-full sm:w-4/6 h-auto align-middle flex justify-around p-1 flex-row m-5">
+       <Card elevation={0}>
+         
+         <Button className="text-xs" ><Link href="/profile">Profile</Link></Button>
+         </Card>
+
         <Card elevation={0} className=" hidden sm:flex text-xs h-auto w-20">
           
           <Button className="text-xs" ><Link href="/wallet">Wallet</Link></Button>
@@ -71,10 +75,6 @@ export default function Home() {
         <Button className="text-xs" ><Link href="/plan">Plan</Link></Button>
         </Card>
 
-        <Card elevation={0}>
-         
-        <Button className="text-xs" ><Link href="/setting">Settings</Link></Button>
-        </Card>
 
       </Card>
 
