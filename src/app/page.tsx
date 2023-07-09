@@ -86,7 +86,7 @@ export default function Home() {
        
 
       {/* Products*/ }
-      <div className="w-full sm:w-4/6 h-130 max-h-150 p-5 flex flex-wrap justify-evenly flex-row ">
+      <div className="w-full sm:w-3/6 h-130 max-h-150 p-5 flex flex-wrap justify-evenly flex-row ">
         <div className="m-5">
           <Card variant="outlined" sx={{ minWidth: 300 ,minHeight:200}}>
             <CardContent>
@@ -110,6 +110,24 @@ export default function Home() {
         <Card variant="outlined" sx={{ minWidth: 300,minHeight:200 }}>
             <CardContent>
               <Typography sx={{ fontSize: 17 }} color="text.secondary" gutterBottom>
+                  Connect to your e-commerce platform <br/>and achieve TrustLess Payment
+              </Typography>
+              <Typography sx={{ fontSize: 15 }} variant="body2">
+                  No need for customer to trust you <br/> to be accountable <br/>
+                  Leverage trust from using Vane <br/> Access world wide customers
+                  <br/>from one interface
+              </Typography>
+            </CardContent>
+            <CardActions>
+                <Button size="small"><Link href="/dex">Learn More</Link></Button>
+            </CardActions>
+          </Card>
+        </div>
+
+        <div className="m-5">
+        <Card variant="outlined" sx={{ minWidth: 300,minHeight:200 }}>
+            <CardContent>
+              <Typography sx={{ fontSize: 17 }} color="text.secondary" gutterBottom>
                   Run On-Chain Ads
               </Typography>
               <Typography sx={{ fontSize: 15 }} variant="body2">
@@ -125,12 +143,12 @@ export default function Home() {
         </div>
  
         <div className="m-5">
-        <Card variant="outlined" sx={{ minWidth: 300,minHeight:200 }}>
+        <Card variant="outlined" sx={{ minWidth: 300,minHeight:210 }}>
             <CardContent>
               <Typography sx={{ fontSize: 17 }} color="text.secondary" gutterBottom>
                 Build Your Client Community.
               </Typography>
-              <Typography sx={{ fontSize: 14 }} variant="body2">
+              <Typography sx={{ fontSize: 15 }} variant="body2">
                   Benefit verifiable testimonials and <br></br>
                   actual client retention and inputs
               </Typography>
@@ -141,21 +159,6 @@ export default function Home() {
           </Card>
         </div>
 
-        {/* <div className="m-5">
-        <Card variant="outlined" sx={{ minWidth: 275 }}>
-            <CardContent>
-              <Typography sx={{ fontSize: 17 }} color="text.secondary" gutterBottom>
-                  Store & Grow your Capital
-              </Typography>
-              <Typography sx={{ fontSize: 13 }} variant="body2">
-                  Access staking and Dexs features <br></br> to grow your capital
-              </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="small"><Link href="/dex">Learn More</Link></Button>
-            </CardActions>
-          </Card>
-        </div> */}
 
       </div>
       {/* Footer */}
